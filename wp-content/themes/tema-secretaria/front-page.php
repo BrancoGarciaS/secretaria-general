@@ -75,7 +75,17 @@
                         } ?>
                     </div>
                     <h3 class="news-title"><?php the_title(); ?></h3>
-                    <div class="news-summary"><?php the_excerpt(); ?></div>
+                    <div class="news-summary">
+                        <?php 
+                        // 1. Preguntamos si tiene un resumen manual (Extracto)
+                        if ( has_excerpt() ) {
+                            the_excerpt(); 
+                        } else {
+                            // 2. Si no tiene, cortamos el contenido a 20 palabras y agregamos "..."
+                            echo wp_trim_words( get_the_content(), 20, '...' );
+                        }
+                        ?>
+                    </div>
                     <a href="<?php the_permalink(); ?>" class="btn-read-more">Seguir Leyendo</a>
                 </article>
             <?php 

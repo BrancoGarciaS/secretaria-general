@@ -821,3 +821,88 @@ body {
     color: #00A499; /* Verde al pasar el mouse */
     text-decoration: underline;
 }
+/* --- ESTILOS NOTICIA INDIVIDUAL (single.php) --- */
+
+.single-news-container {
+    max-width: 1500px; /* Aumentado para ocupar más pantalla */
+    margin: 40px auto;
+    padding: 0 20px; /* Mantiene márgenes de seguridad en móviles */
+}
+
+.article-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.article-category a {
+    color: var(--color-primary); /* Verde corporativo */
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.article-title {
+    font-size: 36px;
+    color: var(--color-primary); /* CAMBIO: Título en Verde */
+    margin: 15px 0;
+    line-height: 1.2;
+    font-weight: 900; /* Un poco más grueso para destacar */
+}
+
+.article-meta {
+    color: var(--color-text-gray);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.article-featured-image {
+    margin-bottom: 30px;
+}
+
+.article-featured-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* --- ESTILOS DEL RESUMEN --- */
+
+.article-excerpt-wrapper {
+    margin-bottom: 30px;
+    border-left: 4px solid var(--color-primary); /* Decoración lateral verde */
+    padding-left: 20px;
+    background-color: #f9f9f9; /* Fondo muy suave para destacar el bloque */
+    padding: 20px;
+    border-radius: 0 8px 8px 0;
+}
+
+/* La palabra "Resumen:" */
+.excerpt-label {
+    font-size: 22px; /* Grande */
+    color: var(--color-primary); /* Celeste/Verde corporativo */
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* El texto del resumen */
+.article-lead {
+    font-size: 18px; /* Tamaño normal de lectura */
+    line-height: 1.6;
+    color: var(--color-text-dark); /* Gris oscuro normal */
+    font-style: italic; /* Cursiva para diferenciarlo del cuerpo */
+    font-weight: 400; /* Peso normal */
+}
+
+/* Eliminar márgenes extra del párrafo automático de WP dentro del resumen */
+.article-lead p {
+    margin: 0;
+}
+
+/* --- CONTENIDO --- */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+}
