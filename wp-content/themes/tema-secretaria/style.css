@@ -1,0 +1,823 @@
+/*
+Theme Name: Tema Secretaría General USACH
+Author: Branco García
+Description: Tema a medida basado en HTML estático
+Version: 1.0
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Variables de colores extraídas de Figma */
+    --color-primary: #00A499;
+    --color-gradient-start: #00A499;
+    --color-gradient-mid: #29BFB5;
+    --color-gradient-end: #16E3D5;
+    --color-text-dark: #394049;
+    --color-text-gray: #61666D;
+    --color-orange: #EA7600;
+    --color-bg-light: #D9D9D9;
+    --font-main: 'Nunito Sans', sans-serif;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #FFFFFF;
+    overflow-x: hidden; /* Evita scroll horizontal indeseado */
+}
+
+/* --- HEADER --- */
+.site-header {
+    padding: 10px 5%; /* Espaciado lateral responsivo */
+    margin-bottom: 20px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.btn-recursos {
+    background: none;
+    border: none;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--color-primary); /* Color turquesa según Figma */
+    cursor: pointer;
+}
+
+/* Dropdown básico (se puede mejorar con JS) */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-container:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: var(--color-text-dark);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.header-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los items bajen si no caben */
+    gap: 15px;
+}
+
+.main-nav li {
+    display: flex;
+    align-items: center;
+}
+
+/* La raya separadora | */
+.main-nav li:not(:last-child)::after {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    background-color: #C4C4C4;
+    margin-left: 15px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* --- HERO SECTION --- */
+.hero-section {
+    width: 100%;
+}
+
+.hero-image {
+    width: 100%;
+    height: auto; /* Mantiene la proporción */
+    display: block;
+}
+
+/* Contenedor de los botones de abajo */
+.quick-links-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    /* Padding superior de 20px para dar aire */
+    padding: 20px 5% 40px 5%; 
+    text-align: center;
+}
+/* Busca tu clase .quick-link-item y asegúrate que tenga esto: */
+.quick-link-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    position: relative;
+    
+    /* --- NUEVAS PROPIEDADES PARA QUE PAREZCA BOTÓN --- */
+    text-decoration: none; /* Quita el subrayado feo de los links */
+    color: inherit;        /* Hereda el color gris original, no el azul de link */
+    cursor: pointer;       /* Manito al pasar el mouse */
+    transition: transform 0.2s ease; /* Opcional: animación suave */
+}
+
+/* Opcional: Efecto al pasar el mouse para que se sienta "presionable" */
+.quick-link-item:hover {
+    transform: translateY(-5px); /* Se mueve un poquito hacia arriba */
+}
+
+/* Líneas separadoras entre items */
+.quick-link-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -15px;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background-color: #C4C4C4;
+}
+
+@media (max-width: 768px) {
+    .quick-link-item:not(:last-child)::after {
+        display: none; /* En celular quitamos las líneas */
+    }
+}
+
+.icon-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* El fondo verde de los iconos */
+.bg-icon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary);
+    opacity: 0.1; /* Ajustar opacidad si es necesario */
+    border-radius: 50%; /* O cuadrado según la imagen */
+    z-index: -1;
+}
+
+.quick-link-item h3 {
+    color: var(--color-text-gray);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* --- ESTILOS COMPARTIDOS (TÍTULOS VERDES) --- */
+.section-title-bar {
+    width: 100%;
+    background: linear-gradient(90deg, var(--color-gradient-start) 0%, var(--color-gradient-mid) 73%, var(--color-gradient-end) 100%);
+    padding: 15px 5%;
+    margin: 40px 0;
+}
+
+.section-title-bar h2 {
+    color: #FFFFFF;
+    font-size: 27px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- NOTICIAS GRID --- */
+.news-section {
+    padding-bottom: 50px;
+}
+
+.news-grid {
+    display: grid;
+    /* ESTO ES LA MAGIA RESPONSIVA: */
+    /* Crea tantas columnas como quepan de mínimo 350px */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+    gap: 40px;
+    padding: 0 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.news-card {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.news-image-placeholder {
+    width: 100%;
+    height: 250px;
+    background-color: var(--color-bg-light); /* Gris de Figma */
+    /* Aquí iría: background-image: url(...) */
+}
+
+.news-title {
+    color: var(--color-primary);
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.news-summary {
+    color: var(--color-text-gray);
+    font-size: 16px; /* Bajé un poco de 18px para mejor lectura */
+    line-height: 1.5;
+}
+
+.btn-read-more {
+    display: inline-block;
+    color: var(--color-orange);
+    border: 1px solid var(--color-orange);
+    padding: 10px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+    align-self: flex-start; /* Alineado a la izquierda */
+    transition: all 0.3s ease;
+}
+
+.btn-read-more:hover {
+    background-color: var(--color-orange);
+    color: white;
+}
+
+/* --- VIDEOS GRID --- */
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    padding: 0 5%;
+    margin-bottom: 50px;
+}
+
+.video-item img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* --- FOOTER --- */
+.site-footer {
+    background-color: var(--color-text-dark);
+    color: white;
+    padding: 50px 5%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Para que se adapte en móviles */
+    gap: 30px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.footer-info {
+    text-align: center;
+    flex: 1; /* Toma el espacio central */
+    min-width: 300px;
+}
+
+.footer-info h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.footer-info p {
+    font-size: 14px; /* Un poco más pequeño que el título */
+    line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* --- ESTILOS PÁGINA QUIENES SOMOS --- */
+
+/* Para la página de Quiénes Somos (con sidebar) */
+.qs-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 40px;
+    max-width: 1400px;
+    /* Margen inferior suave de 20px */
+    margin: 40px auto 20px auto; 
+    padding: 0 20px;
+    min-height: 600px;
+}
+/* --- SIDEBAR --- */
+.qs-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* Quitamos el borde derecho porque ahora la tarjeta de la derecha tiene su propio fondo */
+}
+
+.qs-btn {
+    background-color: transparent;
+    border: none;
+    padding: 15px 20px;
+    text-align: left;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #394049;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px; /* Un poco de redondeo al hover */
+}
+
+.qs-btn:hover {
+    background-color: #e0e0e0;
+    color: #00A499;
+}
+
+.qs-btn.active {
+    color: #00A499;
+    background-color: #f0fcfb; /* Fondo sutil para el activo */
+    font-weight: 800;
+}
+
+/* --- TARJETA CENTRAL (ESTILO FIGMA) --- */
+.qs-card {
+    position: relative;
+    background: #F4F4F4;
+    box-shadow: 0px 9.75px 9.75px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 60px 40px; /* Aumenté el padding superior/inferior para dar aire */
+    min-height: 600px;  /* Altura mínima necesaria para que el centrado se note */
+    
+    /* --- NUEVAS LÍNEAS PARA CENTRAR --- */
+    display: flex;           /* Convertimos la caja en flexible */
+    flex-direction: column;  /* El contenido va de arriba a abajo */
+    justify-content: center; /* ESTO centra verticalmente el contenido visible */
+}
+/* --- LA CRUZ DE CIERRE --- */
+.close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    width: 20px; /* Tamaño de la X */
+    height: 20px;
+}
+
+.close-icon img {
+    width: 100%;
+    height: auto;
+}
+
+/* --- CONTENIDO --- */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+.active-content {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.qs-title {
+    font-size: 27px;
+    font-weight: 800;
+    color: #00A499; /* Título en verde como en Figma */
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.qs-subtitle {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.qs-text-block {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #394049;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Agrega espacio entre párrafos dentro del bloque de texto */
+.qs-text-block p {
+    margin-bottom: 20px; /* Este es el "poquito de espacio" (puedes subirlo a 25px si quieres más) */
+    line-height: 1.8;    /* Esto mejora la lectura separando las líneas del mismo párrafo */
+}
+
+/* Opcional: Quitar el margen al último párrafo para que no empuje el borde de abajo */
+.qs-text-block p:last-child {
+    margin-bottom: 0;
+}
+
+.text-teal { color: #00A499; }
+
+/* --- GRILLA DEL EQUIPO --- */
+.team-grid {
+    display: grid;
+    /* Grid responsiva */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.team-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* --- LA MAGIA DEL MARCO Y LA FOTO --- */
+.photo-frame-wrapper {
+    position: relative;
+    width: 140px; /* Tamaño total del conjunto */
+    height: 140px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* El marco (overlay) */
+.frame-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* Se pone ENCIMA de la foto */
+    pointer-events: none; /* Permite clicks a través del marco si fuera necesario */
+}
+
+/* La foto de la persona */
+.person-photo {
+    width: 80%;  /* Ajusta este % según qué tan grueso sea tu marco.png */
+    height: 80%; 
+    border-radius: 50%; /* Foto circular */
+    object-fit: cover;
+    z-index: 1; /* Se pone DEBAJO del marco */
+}
+
+.member-name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #394049;
+    margin-bottom: 5px;
+}
+
+.member-role {
+    font-size: 14px;
+    font-weight: 700;
+    color: #00A499;
+    line-height: 1.2;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .qs-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .qs-sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .qs-btn {
+        white-space: nowrap;
+        background: #fff;
+        border: 1px solid #ddd;
+        margin-right: 10px;
+    }
+    
+    .qs-card {
+        padding: 20px;
+    }
+}
+
+/* Para páginas simples como Consejo de Distinciones */
+.simple-layout {
+    max-width: 1200px;
+    /* Mismo margen suave de 20px abajo */
+    margin: 40px auto 20px auto; 
+    padding: 0 20px;
+}
+
+/* Estilos para listas dentro de textos (como la lista de integrantes) */
+.qs-text-block ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    list-style-type: disc;
+}
+
+.qs-text-block li {
+    margin-bottom: 10px;
+    color: #394049;
+}
+
+
+/* Estilos para el contenido del Editor WYSIWYG */
+
+.qs-text-block p a, 
+.qs-text-block li a,
+.qs-text-block a {
+    color: #EA7600 !important;
+    font-weight: 800 !important;
+    text-decoration: underline; /* Subrayado para que se note que es link */
+}
+
+.qs-text-block a:hover {
+    color: #00A499 !important; /* Verde al pasar el mouse */
+}
+/* 2. Párrafos */
+.qs-text-block p {
+    margin-bottom: 20px; /* Espacio entre párrafos */
+    line-height: 1.6; /* Altura de línea para leer mejor */
+    color: #394049; /* Gris oscuro */
+}
+
+/* 3. Listas (Puntos y Números) */
+.qs-text-block ul, 
+.qs-text-block ol {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.qs-text-block li {
+    margin-bottom: 10px;
+}
+
+/* Estilos automáticos para títulos dentro del editor */
+.qs-text-block h3 {
+    color: #00A499 !important; /* El !important fuerza el color */
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-family: 'Nunito Sans', sans-serif;
+     /* Opcional: Para que se vea más corporativo */
+}
+
+/* Agreguemos también el H2 por si el cliente pone el título principal en el editor */
+.qs-text-block h2 {
+    color: #00A499 !important;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    font-family: 'Nunito Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+
+/* Agreguemos también el H2 por si el cliente pone el título principal en el editor */
+.qs-text-block h1 {
+    color: #00A499 !important;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    font-family: 'Nunito Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+
+/* --- ARREGLO IMÁGENES WYSIWYG --- */
+
+/* 1. Habilitar las clases nativas de WordPress */
+/* Cuando le das click a "Alinear al centro" en el editor, WP agrega esta clase */
+.aligncenter {
+    display: block;
+    margin: 0 auto;
+    clear: both;
+}
+
+/* Cuando le das click a "Alinear izquierda" */
+.alignleft {
+    float: left;
+    margin-right: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+/* Cuando le das click a "Alinear derecha" */
+.alignright {
+    float: right;
+    margin-left: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+/* 2. FORZAR centrado automático dentro de tus bloques de texto */
+/* Esto asegura que cualquier imagen suelta dentro de tus pestañas se centre y no se salga del ancho */
+.qs-text-block img {
+    display: block;        /* Comportarse como caja, no como texto */
+    margin-left: auto;     /* Empuje automático izquierda */
+    margin-right: auto;    /* Empuje automático derecha */
+    max-width: 100%;       /* Que nunca sea más ancha que la tarjeta */
+    height: auto;          /* Que no se deforme */
+    margin-bottom: 20px;   /* Espacio abajo para que no se pegue al texto */
+    margin-top: 20px;      /* Espacio arriba */
+}
+
+
+/* --- ESTILOS SUB-NAVEGACIÓN (ESTRUCTURA Y EQUIPO) --- */
+
+/* Contenedor de botones internos */
+.sub-nav-container, .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+/* Estilo de los Sub-Botones */
+.sub-btn, .filter-btn {
+    background: white;
+    border: 1px solid #00A499;
+    color: #00A499;
+    padding: 8px 15px;
+    border-radius: 20px; /* Redonditos */
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sub-btn:hover, .filter-btn:hover {
+    background: #00A499;
+    color: white;
+}
+
+/* Botón Activo */
+.sub-btn.active, .filter-btn.active {
+    background: #00A499;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,164,153,0.3);
+}
+
+/* Animación suave al filtrar */
+.team-card {
+    transition: all 0.3s ease;
+}
+
+/* --- ESTILOS PESTAÑAS EXTERNAS --- */
+.external-tabs {
+    margin-bottom: 0 !important; /* Pegado a la tarjeta de abajo */
+    padding-left: 10px;
+    border-bottom: none !important; /* Quitamos la línea de abajo */
+}
+
+.external-tabs .sub-btn,
+.external-tabs .filter-btn {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 0;
+    background: #eee; /* Gris clarito inactivo */
+    border: none;
+    padding: 12px 20px;
+}
+
+.external-tabs .sub-btn.active,
+.external-tabs .filter-btn.active {
+    background: #F4F4F4; /* MISMO COLOR que la tarjeta .qs-card */
+    color: #00A499;
+    position: relative;
+    top: 2px; /* Truco visual para que parezca unido a la tarjeta */
+    z-index: 2;
+    box-shadow: 0 -4px 6px rgba(0,0,0,0.05);
+}
+
+.qs-card {
+    /* Aseguramos que la tarjeta tenga z-index menor para el efecto de pestaña */
+    z-index: 1;
+    border-top-left-radius: 0; /* Opcional: cuadrar esquina si la pestaña empieza ahí */
+}
+
+/* --- NUEVOS ESTILOS SIDEBAR JERÁRQUICO --- */
+/* --- SIDEBAR JERÁRQUICO (SUB-MENÚS) --- */
+
+/* Contenedor que se despliega debajo del botón principal */
+.submenu-container {
+    display: none; /* Se oculta por JS */
+    flex-direction: column;
+    /* Un pequeño margen para separar del botón padre */
+    margin-bottom: 5px; 
+    /* Fondo opcional para distinguir el bloque de sub-opciones */
+    background-color: #fff; 
+}
+
+/* Estilo del SUB-BOTÓN (Hijo directo) */
+.sub-btn-sidebar {
+    background: transparent;
+    border: none;
+    text-align: left;
+    
+    /* Mismo padding y fuente que el botón padre, pero... */
+    padding: 12px 20px 12px 35px; /* Más padding a la izquierda para indentar */
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px; /* Mismo tamaño que el padre */
+    font-weight: 400; /* Sin negrita (Normal) */
+    color: #394049;   /* Mismo gris */
+    
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent; /* Línea lista para activarse */
+}
+
+/* Estilo del SUB-SUB-BOTÓN (Nieto - Nivel 3) */
+.sub-btn-sidebar.nivel-3 {
+    padding-left: 55px; /* Más indentación aún */
+    font-size: 18px;    /* Opcional: un pelín más chico o igual */
+}
+
+/* Hover en sub-botones */
+.sub-btn-sidebar:hover {
+    color: #EA7600; /* Naranja al pasar mouse */
+    background-color: #f9f9f9;
+}
+
+/* SUB-BOTÓN ACTIVO */
+.sub-btn-sidebar.active {
+    color: #EA7600; /* Texto Naranja */
+    font-weight: 700; /* Negrita al activarse para destacar */
+    /* La línea naranja vertical a la izquierda (Estilo árbol) */
+    border-left: 3px solid #EA7600; 
+    background-color: #fff8f0; /* Fondo naranja muy sutil */
+}
+
+/* Ajuste para que el Sidebar no se vea cortado si la lista es larga */
+.qs-sidebar {
+    height: fit-content;
+}
+
+/* Estilo del SUB-SUB-BOTÓN (Nieto - Nivel 4) */
+.sub-btn-sidebar.nivel-4 {
+    padding-left: 75px; /* Más indentación que el nivel 3 */
+    font-size: 15px;
+    color: #999;
+}
+
+/* Estilo para el email en las tarjetas de estructura */
+.member-email {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.member-email a {
+    color: #EA7600; /* Naranja */
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.member-email a:hover {
+    color: #00A499; /* Verde al pasar el mouse */
+    text-decoration: underline;
+}

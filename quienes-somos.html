@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiénes Somos - Secretaría General</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-top">
+            <div class="logo-container">
+                <img src="images/Recurso 6 1.png" alt="Logo Secretaría General" class="main-logo">
+            </div>
+            
+            <div class="dropdown-container">
+                <button class="btn-recursos">Recursos de Interés ▼</button>
+                <div class="dropdown-content">
+                    <a href="cometidos-funcionarios.html">Cometidos Funcionarios</a>
+                    <a href="convoca-elecciones.html">Convoca Elecciones</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    
+                    <li><a href="quienes-somos.html" class="active-link">Quienes Somos</a></li>
+                    
+                    <li><a href="#">Dpto de Información y Gestión Documental</a></li>
+                    <li><a href="noticias.html">Noticias</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="accessibility-icon">
+                <img src="images/settings_accessibility_100dp_00A499_FILL0_wght400_GRAD0_opsz48 1.png" alt="Accesibilidad">
+            </div>
+        </div>
+    </header>
+
+    <div class="qs-layout">
+        
+        <aside class="qs-sidebar">
+            <button class="qs-btn active" onclick="openTab(event, 'historia')">Historia</button>
+            <button class="qs-btn" onclick="openTab(event, 'mision')">Misión y Visión</button>
+            <button class="qs-btn" onclick="openTab(event, 'organigrama')">Organigrama</button>
+            <button class="qs-btn" onclick="openTab(event, 'estructura')">Estructura</button>
+            <button class="qs-btn" onclick="openTab(event, 'equipo')">Equipo de Trabajo</button>
+        </aside>
+
+        <main class="qs-content-area">
+            
+            <div class="qs-card">
+                
+                <div class="close-icon">
+                    <img src="images/cierre.png" alt="Cerrar"> </div>
+
+                <div id="historia" class="tab-content active-content">
+                    <h2 class="qs-title">Historia</h2>
+                    <div class="qs-text-block">
+                        <p>La Secretaría General se remonta a los inicios de la Escuela de Artes y Oficios en 1849, como una forma de entregar soporte administrativo a las distintas actividades realizadas dentro de la institución. Desde estos albores y durante muchos años, la Secretaría General ha evolucionado y se ha adaptado a las distintas necesidades de cada momento histórico, siendo la segunda unidad más antiguas de la Universidad de Santiago de Chile.</p>
+                        <p>Hoy la Secretaría General es una Unidad Mayor, a cargo de un directivo o una directiva superior, el Secretario o la Secretaria General que, a través de sus dependencias, presta servicios de asesoría jurídica, administrativa, disciplinaria e informativa a la comunidad universitaria, da fe de los actos académicos y administrativos, custodia y gestiona los registros y archivos que contienen la vida institucional y, en términos amplios, está al servicio de toda la comunidad universitaria para apoyar en los procesos y cambios institucionales.</p>
+                        <p>El Secretario o la Secretaria General cumple la función de ser el ministro o la ministra de fe de la Universidad, mediante la emisión de certificados de diversa naturaleza y la autorización de documentos institucionales. Además, preside el Consejo de Honores y Distinciones de la Universidad, y tiene a su cargo la Secretaría del Consejo Académico, así como las materias sobre acceso a la información pública, de declaraciones de intereses y patrimonio y es la contraparte de diversas instituciones de fiscalización y control.</p>
+                    </div>
+                </div>
+
+                <div id="equipo" class="tab-content">
+                    <h2 class="qs-title uppercase text-teal">SECRETARIA GENERAL</h2>
+                    
+                    <div class="team-intro">
+                        <h3 class="qs-subtitle text-teal">Funciones:</h3>
+                        <p class="qs-text-block">La Secretaría General de la Universidad de Santiago de Chile es una Unidad Mayor de asesoría y gestión del Gobierno Universitario, que certifica la validez de los actos institucionales tanto académicos como administrativos, de acuerdo al marco normativo vigente. Para llevar a cabo sus labores cuenta con las competencias y destrezas de un equipo humano idóneo, que presta servicios de asesoría jurídica y disciplinaria, ejecución administrativa e informativa, y que tiene la custodia de los registros y archivos que contienen la vida institucional, brindando con todo esto soporte jurídico y administrativo a la gestión universitaria.</p>
+                    </div>
+
+                    <div class="team-grid">
+                        
+                        <div class="team-card">
+                            <div class="photo-frame-wrapper">
+                                <img src="images/marco.png" class="frame-overlay" alt="marco">
+                                <img src="images/todos.png" class="person-photo" alt="Sandra Barrera">
+                            </div>
+                            
+                            <h4 class="member-name">Sandra Barrera de Proença</h4>
+                            <p class="member-role text-teal">Secretaria General</p>
+                        </div>
+
+                        <div class="team-card">
+                            <div class="photo-frame-wrapper">
+                                <img src="images/marco.png" class="frame-overlay" alt="marco">
+                                <img src="images/miriam.png" class="person-photo" alt="Miriam Avendaño">
+                            </div>
+                            <h4 class="member-name">Miriam Avendaño Celis</h4>
+                            <p class="member-role text-teal">Encargada Administrativa</p>
+                        </div>
+
+                        <div class="team-card">
+                            <div class="photo-frame-wrapper">
+                                <img src="images/marco.png" class="frame-overlay" alt="marco">
+                                <img src="images/loreto.png" class="person-photo" alt="Loreto Malebrán">
+                            </div>
+                            <h4 class="member-name">Loreto Malebrán Rivera</h4>
+                            <p class="member-role text-teal">Encargada Administrativa y Ministra de Fe</p>
+                        </div>
+
+                    </div>
+                </div>
+                 <div id="mision" class="tab-content">
+                    <h2 class="qs-title">Misión y Visión</h2>
+                    <div class="team-intro">
+                        <h3 class="qs-subtitle text-teal">Misión:</h3>
+                        <p class="qs-text-block">La Secretaría General de la Universidad de Santiago de Chile es una Unidad Mayor de asesoría y gestión del Gobierno Universitario, que certifica la validez de los actos institucionales tanto académicos como administrativos, de acuerdo al marco normativo vigente. Para llevar a cabo sus labores cuenta con las competencias y destrezas de un equipo humano idóneo, que presta servicios de asesoría jurídica y disciplinaria, ejecución administrativa e informativa, y que tiene la custodia de los registros y archivos que contienen la vida institucional, brindando con todo esto soporte jurídico y administrativo a la gestión universitaria.</p>
+                        
+                        <h3 class="qs-subtitle text-teal" style="margin-top: 30px;">Visión:</h3>
+                        <p class="qs-text-block">La Secretaría General se adscribe a una comunidad universitaria que se proyecta como referente nacional e internacional de la educación superior, en el marco de las humanidades, el desarrollo científico tecnológico y social de vanguardia, siendo reconocida por su excelencia, y promoción de la equidad social, inclusión y pluralismo, al servicio de las necesidades del país y de la construcción de una sociedad democrática, equitativa y sostenible a nivel global.</p>
+
+                        <h3 class="qs-subtitle text-teal" style="margin-top: 30px;">Política de la Calidad:</h3>
+
+                        <p class="qs-text-block">La Secretaría General de la Universidad de Santiago de Chile  trabaja con un sistema de aseguramiento de la calidad, establecida en su Política de Calidad, mediante la <a href="https://www.transparenciaactiva.usach.cl/sites/default/files/paginas/1047-2020.pdf" target="_blank" style="color: #EA7600; font-weight: bold; word-break: break-all;">
+                            Resolución 1047 de 2020.
+                        </a> </p>
+
+                    </p>
+                    </div>
+                </div>
+                 <div id="organigrama" class="tab-content">
+                    <h2 class="qs-title">Organigrama</h2>
+                    <img src="images/lamina_calidad_isotools_3.png" alt="Política de Calidad" style="max-width: 100%; height: auto; margin-top: 20px;">
+                </div>
+                 <div id="estructura" class="tab-content">
+                    
+                    
+                    <h2 class="qs-title">Secretaría General</h2>
+                    
+                    <div class="team-intro">
+                        <p class="qs-text-block">La Secretaría General está a cargo de una Secretaria General que es la ministra de fe de la Universidad, y ejerce la tuición sobre todos los registros, archivos y actos administrativos que emanen de esta institución de educación superior.</p>
+
+                        <p class="qs-text-block">Para el cumplimiento de sus funciones la Secretaría General cuenta con tres direcciones: Dirección Jurídica; Dirección de Promoción del Cumplimiento; Dirección de Información y Gestión Documental. En el mismo orden se produce su subrogación.</p>
+                    </div>
+
+
+                    <div class="team-card">
+                            <div class="photo-frame-wrapper">
+                                <img src="images/marco.png" class="frame-overlay" alt="marco">
+                                <img src="images/todos.png" class="person-photo" alt="Sandra Barrera">
+                            </div>
+                            
+                            <h4 class="member-name">Sandra Barrera de Proença Abogada </h4>
+                            <p class="member-role text-teal"><a href="mailto:upd@usach.cl" style="color: #EA7600;">upd@usach.cl</a></p>
+
+                        </div>
+                    
+                </div>
+
+            </div> </main>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("qs-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+    
+    
+    <section class="quick-links-container">
+        
+        <a href="consejo-distinciones.html" class="quick-link-item">
+            <div class="icon-wrapper">
+                <div class="bg-icon"></div> 
+                <img src="images/workspace_premium_37dp_00A499_FILL0_wght400_GRAD0_opsz40 1.png" alt="Icono">
+            </div>
+            <h3>Consejo de Distinciones</h3>
+        </a>
+
+        <a href="politica-calidad.html" class="quick-link-item">
+            <div class="icon-wrapper">
+                <div class="bg-icon"></div>
+                <img src="images/diamond_37dp_00A499_FILL0_wght400_GRAD0_opsz40 1.png" alt="Icono">
+            </div>
+            <h3>Política de Calidad</h3>
+        </a>
+
+        <a href="procesos-disciplinarios.html" class="quick-link-item">
+            <div class="icon-wrapper">
+                <div class="bg-icon"></div>
+                <img src="images/rule_settings_80dp_00A499_FILL0_wght400_GRAD0_opsz48 1.png" alt="Icono">
+            </div>
+            <h3>Procesos Disciplinarios</h3>
+        </a>
+
+        <a href="titulos-grados.html" class="quick-link-item">
+            <div class="icon-wrapper">
+                <div class="bg-icon"></div>
+                <img src="images/order_approve_80dp_00A499_FILL0_wght400_GRAD0_opsz48 1.png" alt="Icono">
+            </div>
+            <h3>Títulos y Grados</h3>
+        </a>
+
+        <a href="documentacion.html" class="quick-link-item">
+            <div class="icon-wrapper">
+                <div class="bg-icon"></div>
+                <img src="images/assignment_add_80dp_00A499_FILL0_wght400_GRAD0_opsz48 1.png" alt="Icono">
+            </div>
+            <h3>Documentación Resolución</h3>
+        </a>
+
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="images/Recurso 8 1.png" alt="Logo Universidad">
+            </div>
+            
+            <div class="footer-info">
+                <h3>Secretaría General</h3>
+                <p>Teléfono: 56-2-27180104</p>
+                <p>Universidad de Santiago de Chile</p>
+                <p>Avenida Libertador Bernardo O'Higgins 3363 | Estación Central | Santiago | Chile</p>
+                <p>Unidad de Partes, Informaciones y Archivo</p>
+            </div>
+
+            <div class="footer-partner">
+                <img src="images/logo_segic 1.png" alt="Logo Segic">
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
