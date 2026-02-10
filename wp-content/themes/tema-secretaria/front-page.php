@@ -11,46 +11,36 @@
     </section>
 
     <section class="quick-links-container">
-        
         <?php 
-        // 1. LA CONSULTA: "Traeme todos los botones que haya creado"
         $mis_botones = new WP_Query(array(
-            'post_type'      => 'boton_home', // El nombre que pusimos en functions.php
-            'posts_per_page' => -1,           // -1 significa "TODOS" (sin límite)
-            'order'          => 'ASC'         // Orden ascendente de creación
+            'post_type'      => 'boton_home',
+            'posts_per_page' => -1,
+            'order'          => 'ASC'
         ));
 
-        // 2. EL BUCLE
         if ($mis_botones->have_posts()) : 
             while ($mis_botones->have_posts()) : $mis_botones->the_post(); 
-                
-                // Obtenemos los campos de ESTE botón específico
                 $enlace = get_field('enlace_boton');
                 $icono  = get_field('icono_boton');
             ?>
-
                 <a href="<?php echo esc_url($enlace); ?>" class="quick-link-item">
                     <div class="icon-wrapper">
                         <div class="bg-icon"></div> 
-                        
                         <?php if($icono): ?>
                             <img src="<?php echo esc_url($icono); ?>" alt="Icono">
                         <?php else: ?>
                             <img src="<?php echo get_template_directory_uri(); ?>/images/workspace_premium_37dp_00A499_FILL0_wght400_GRAD0_opsz40 1.png" alt="Icono">
                         <?php endif; ?>
                     </div>
-                    
                     <h3><?php the_title(); ?></h3>
                 </a>
-
             <?php 
             endwhile; 
-            wp_reset_postdata(); // Importante: Limpiar después de usar
+            wp_reset_postdata(); 
         else: 
         ?>
             <p>No hay botones configurados.</p>
         <?php endif; ?>
-
     </section>
 
     <section class="news-section">
@@ -77,11 +67,9 @@
                     <h3 class="news-title"><?php the_title(); ?></h3>
                     <div class="news-summary">
                         <?php 
-                        // 1. Preguntamos si tiene un resumen manual (Extracto)
                         if ( has_excerpt() ) {
                             the_excerpt(); 
                         } else {
-                            // 2. Si no tiene, cortamos el contenido a 20 palabras y agregamos "..."
                             echo wp_trim_words( get_the_content(), 20, '...' );
                         }
                         ?>
@@ -94,6 +82,56 @@
             else : 
             ?>
                 <p>No hay noticias publicadas aún.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <section class="videos-section">
+        <div class="section-title-bar">
+            <h2>VIDEO DESTACADO</h2>
+        </div>
+
+        <div class="videos-grid">
+            <?php 
+            $videos_query = new WP_Query(array(
+                'post_type'      => 'video_destacado',
+                'posts_per_page' => 2, // Solo los 2 recientes
+                'order'          => 'DESC',
+                'orderby'        => 'date'
+            ));
+
+            if ($videos_query->have_posts()) : 
+                while ($videos_query->have_posts()) : $videos_query->the_post(); 
+                    
+                    $url_video = get_field('link_video_youtube');
+                    $video_id = obtener_id_youtube($url_video); // Función de functions.php
+                    
+                    if($video_id) {
+                        $thumbnail = "https://img.youtube.com/vi/{$video_id}/hqdefault.jpg";
+                    } else {
+                        $thumbnail = get_template_directory_uri() . '/images/video-placeholder.png'; 
+                    }
+            ?>
+                <div class="video-item">
+                    <a href="<?php echo esc_url($url_video); ?>" target="_blank" rel="noopener noreferrer">
+                        
+                        <h3 class="video-title" title="<?php the_title(); ?>">
+                            <?php the_title(); ?>
+                        </h3>
+
+                        <div class="video-thumbnail-wrapper">
+                            <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php the_title(); ?>" class="video-thumb">
+                            <div class="play-icon">▶</div>
+                        </div>
+                        
+                    </a>
+                </div>
+            <?php 
+                endwhile; 
+                wp_reset_postdata(); 
+            else: 
+            ?>
+                <p style="padding: 0 5%;">No hay videos destacados configurados.</p>
             <?php endif; ?>
         </div>
     </section>

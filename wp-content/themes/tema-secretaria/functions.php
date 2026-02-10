@@ -144,4 +144,43 @@ add_action('departamento_edit_form_fields', 'habilitar_editor_visual_taxonomias'
 
 // Hook para Categorías de Estructura
 add_action('categoria_estructura_edit_form_fields', 'habilitar_editor_visual_taxonomias', 10, 2);
+
+// 1. REGISTRAR POST TYPE PARA VIDEOS
+function registrar_videos_destacados() {
+    register_post_type('video_destacado', array(
+        'labels' => array(
+            'name'          => 'Videos Destacados',
+            'singular_name' => 'Video'
+        ),
+        'public'      => true,
+        'has_archive' => false, // Cambia a true si luego quieres una página de archivo automática
+        'menu_icon'   => 'dashicons-video-alt3', // Icono de video
+        'supports'    => array('title') // Solo necesitamos el título, el link va por ACF/SCF
+    ));
+}
+add_action('init', 'registrar_videos_destacados');
+
+// 2. FUNCIÓN AUXILIAR: EXTRAER ID DE YOUTUBE
+// Esta función convierte "https://www.youtube.com/watch?v=AbCdEfGh" en "AbCdEfGh"
+function obtener_id_youtube($url) {
+    $pattern = '%^# Match any youtube URL
+        (?:https?://)?  # Optional scheme. Either http or https
+        (?:www\.)?      # Optional www subdomain
+        (?:             # Group host alternatives
+          youtu\.be/    # Either youtu.be,
+        | youtube\.com  # or youtube.com
+          (?:           # Group path alternatives
+            /embed/     # Either /embed/
+          | /v/         # or /v/
+          | /watch\?v=  # or /watch?v=
+          )             # End path alternatives.
+        )               # End host alternatives.
+        ([\w-]{10,12})  # Allow 10-12 for 11 char youtube id.
+        $%x';
+    $result = preg_match($pattern, $url, $matches);
+    if ($result) {
+        return $matches[1];
+    }
+    return false;
+}
 ?>

@@ -906,3 +906,133 @@ body {
     max-width: 100%;
     height: auto;
 }
+
+/* --- SECCIÓN VIDEOS --- */
+
+.videos-section {
+    padding-bottom: 50px;
+}
+
+.videos-grid {
+    display: grid;
+    /* Usamos auto-fit para que se acomoden */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+    gap: 40px; /* Un poco más de espacio entre videos */
+    padding: 0 5%;
+    max-width: 1400px; /* Contenedor general contenido */
+    margin: 0 auto;
+    justify-content: center; /* Centra los elementos si sobran espacios */
+}
+
+.video-item {
+    position: relative;
+    /* Estilo tarjeta limpia */
+    background-color: transparent; 
+    border-radius: 12px;
+    overflow: hidden; /* Recorta las esquinas de la imagen */
+    transition: transform 0.3s ease;
+    
+    /* SOLUCIÓN AL VIDEO GIGANTE: */
+    /* Si hay uno solo, no crecerá más de 600px */
+    width: 100%;
+    max-width: 600px; 
+    margin: 0 auto; /* Se centra en su columna */
+}
+
+/* Efecto al pasar el mouse por toda la tarjeta */
+.video-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Quitamos subrayado de enlaces */
+.video-item a {
+    text-decoration: none;
+    display: block; /* Hace que toda la tarjeta sea clicable */
+}
+
+/* --- TÍTULO DEL VIDEO (ARRIBA) --- */
+.video-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px; /* Tamaño legible */
+    font-weight: 800; /* Bien negrita */
+    color: var(--color-text-dark); /* Gris oscuro */
+    margin: 0 0 15px 0; /* Espacio debajo del título (separación con la imagen) */
+    text-align: left; /* Alineado a la izquierda se ve más ordenado si está arriba */
+    line-height: 1.3;
+    
+    /* Cortar texto largo en una línea con "..." */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px; /* Un pelín de aire lateral */
+}
+
+/* Cambio de color del título al pasar el mouse */
+.video-item:hover .video-title {
+    color: var(--color-primary); /* Verde */
+}
+
+/* --- IMAGEN DEL VIDEO --- */
+.video-thumbnail-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Mantiene proporción 16:9 (Youtube) */
+    background-color: #000;
+    border-radius: 12px; /* Redondeamos la imagen */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra suave tras la imagen */
+    overflow: hidden;
+}
+
+.video-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.95;
+    transition: opacity 0.3s, transform 0.3s; /* Animación suave */
+}
+
+/* Efecto zoom sutil en la imagen al hover */
+.video-item:hover .video-thumb {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* --- BOTÓN PLAY --- */
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 164, 153, 0.9); /* Verde con transparencia */
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    padding-left: 4px; /* Ajuste visual óptico */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    z-index: 2; /* Asegura que esté encima de la imagen */
+}
+
+.video-item:hover .play-icon {
+    background: #EA7600; /* Naranja al hover */
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Ajuste móvil */
+@media (max-width: 768px) {
+    .videos-grid {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .video-title {
+        font-size: 16px; /* Un poco más chico en celular */
+        white-space: normal; /* Permitir 2 líneas en celular si es necesario */
+    }
+}
