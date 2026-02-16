@@ -78,6 +78,25 @@ body {
     display: block;
 }
 
+/* Quitar los puntos y márgenes de los elementos de lista generados por WordPress */
+.dropdown-content li {
+    list-style: none; /* Esto quita el punto/guión */
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #eee; /* Opcional: añade una línea separadora suave */
+}
+
+/* Opcional: Quitar el borde del último elemento para que se vea limpio */
+.dropdown-content li:last-child {
+    border-bottom: none;
+}
+
+/* Asegurar que el enlace ocupe todo el espacio del botón */
+.dropdown-content li a {
+    display: block; 
+    /* Tus estilos de color y padding ya se aplican por la regla .dropdown-content a */
+}
+
 .header-bottom {
     display: flex;
     justify-content: space-between;
@@ -436,7 +455,7 @@ body {
 }
 
 .qs-text-block {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.6;
     color: #394049;
     font-weight: 500;
@@ -545,7 +564,7 @@ body {
 
 /* Para páginas simples como Consejo de Distinciones */
 .simple-layout {
-    max-width: 1200px;
+    max-width: 1600px;
     /* Mismo margen suave de 20px abajo */
     margin: 40px auto 20px auto; 
     padding: 0 20px;
@@ -1034,5 +1053,177 @@ body {
     .video-title {
         font-size: 16px; /* Un poco más chico en celular */
         white-space: normal; /* Permitir 2 líneas en celular si es necesario */
+    }
+}
+
+/* --- ESTILOS PÁGINA SIMPLE (page-simple.php) --- */
+
+.simple-layout {
+    max-width: 1600px; /* Ancho máximo igual que la grilla de noticias */
+    margin: 40px auto; /* Centrado y separado del título */
+    padding: 0 20px;   /* Margen lateral en móviles */
+    min-height: 400px; /* Altura mínima por si hay poco texto */
+}
+
+/* Ajuste para que las listas dentro del contenido se vean bien */
+.simple-layout .qs-text-block ul, 
+.simple-layout .qs-text-block ol {
+    margin-left: 40px; /* Sangría para las viñetas */
+    margin-bottom: 20px;
+}
+
+.simple-layout .qs-text-block li {
+    margin-bottom: 10px;
+}
+/* --- ESTILOS TÍTULOS Y GRADOS (Tabla) --- */
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    font-size: 0.95em;
+}
+.price-table th {
+    background-color: var(--color-primary); /* Usa tu variable de color */
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+.price-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+.price-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.price-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* --- ESTILOS DOCUMENTACIÓN (Caja Vistos) --- */
+.vistos-box {
+    background: #f9f9f9; 
+    padding: 20px; 
+    border-left: 4px solid var(--color-primary); 
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+
+/* --- BOTÓN DESTACADO ELECCIONES --- */
+.highlight-link {
+    display: inline-block;
+    background-color: var(--color-primary); /* Verde base */
+    color: #ffffff; /* Color crema suave por defecto */
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 800; /* Letra gruesa */
+    margin: 15px 0;
+    transition: all 0.3s ease; /* Transición suave */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Estado Hover (Mouse encima) */
+.highlight-link:hover {
+    background-color: #ffffff;; /* Verde un poco más oscuro */
+    color: #ffffff; /* Blanco puro */
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+/* --- ESTILOS INFOGRAFÍAS (DIP) --- */
+
+.infografia-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 20px; /* Espacio entre imágenes */
+    margin-top: 20px;
+}
+
+.infografia-item img {
+    width: 100%;       /* Ocupa todo el ancho de su columna */
+    height: auto;      /* Mantiene la proporción */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra suave */
+    display: block;    /* Evita espacios extra abajo */
+}
+
+/* RESPONSIVO: En tablets y celulares, pasa a 1 columna */
+@media (max-width: 768px) {
+    .infografia-grid {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+}
+/* --- BOTONES TRANSPARENCIA (CORREGIDO SPANS) --- */
+
+.qs-text-block a.transparencia-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-weight: normal !important;
+    padding: 15px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: none !important; /* Elimina bordes fantasma */
+}
+
+.qs-text-block a.transparencia-btn:hover {
+    transform: scale(1.03);
+    background-color: #EA7600;
+    color: #ffffff !important;
+}
+
+/* Icono */
+.qs-text-block a.transparencia-btn .btn-icon {
+    width: 45px;
+    height: auto;
+    flex-shrink: 0;
+    margin-right: 15px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    display: block !important;
+    border: none !important;
+    padding: 0 !important;
+    background: none !important;
+}
+
+/* Grupo de Texto (AHORA ES UN SPAN QUE ACTÚA COMO FLEX) */
+.transparencia-btn .btn-text-group {
+    display: flex !important;      /* Vital para que un span ordene cosas */
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;              /* Ajuste de interlineado */
+}
+
+.transparencia-btn .line-main {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: block;                /* Forzar salto de línea */
+    color: #ffffff !important;
+}
+
+.transparencia-btn .line-sub {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.95;
+    display: block;                /* Forzar salto de línea */
+    color: #ffffff !important;
+}
+
+@media (max-width: 600px) {
+    .qs-text-block a.transparencia-btn {
+        max-width: 100%;
     }
 }

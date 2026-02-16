@@ -23,8 +23,16 @@
             <div class="dropdown-container">
                 <button class="btn-recursos">Recursos de Interés ▼</button>
                 <div class="dropdown-content">
-                    <a href="<?php echo home_url('/cometidos-funcionarios'); ?>">Cometidos Funcionarios</a>
-                    <a href="<?php echo home_url('/convoca-elecciones'); ?>">Convoca Elecciones</a>
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'menu-interes',
+                        'container'      => false,
+                        'menu_class'     => '', // Sin clases extra, los estilos de <a> en CSS se aplicarán igual
+                        'fallback_cb'    => false,
+                        'items_wrap'     => '%3$s', // Esto elimina el <ul> envolvente para que solo salgan los <a>
+                        'depth'          => 1
+                    ));
+                    ?>
                 </div>
             </div>
         </div>
@@ -42,6 +50,7 @@
                 ?>
             </nav>
             <div class="accessibility-icon">
-                </div>
+                <img src="<?php echo get_template_directory_uri(); ?>/images/settings_accessibility_100dp_00A499_FILL0_wght400_GRAD0_opsz48 1.png" alt="Accesibilidad">
+            </div>
         </div>
     </header>

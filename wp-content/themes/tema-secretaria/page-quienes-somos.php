@@ -9,17 +9,28 @@ get_header();
     
     <aside class="qs-sidebar">
         
-        <button class="qs-btn active" onclick="openTab(event, 'historia')">Historia</button>
-        <button class="qs-btn" onclick="openTab(event, 'mision')">Misión y Visión</button>
-        <button class="qs-btn" onclick="openTab(event, 'organigrama')">Organigrama</button>
-        <button class="qs-btn" onclick="openTab(event, 'estructura')">Estructura</button>
+        <button class="qs-btn active" onclick="openTab(event, 'historia')">
+            <?php echo get_field('titulo_btn_historia') ?: 'Historia'; ?>
+        </button>
+
+        <button class="qs-btn" onclick="openTab(event, 'mision')">
+            <?php echo get_field('titulo_btn_mision') ?: 'Misión y Visión'; ?>
+        </button>
+        
+        <button class="qs-btn" onclick="openTab(event, 'organigrama')">
+            <?php echo get_field('titulo_btn_organigrama') ?: 'Organigrama'; ?>
+        </button>
+        
+        <button class="qs-btn" onclick="openTab(event, 'estructura')">
+            <?php echo get_field('titulo_btn_estructura') ?: 'Estructura'; ?>
+        </button>
         
         <div id="submenu-estructura" class="submenu-container">
             <?php 
             $intro_estructura = get_field('tab_estructura'); 
             ?>
             <button class="sub-btn-sidebar active" 
-                    onclick="filterStructure('all', this, 'ESTRUCTURA', `<?php echo esc_attr($intro_estructura); ?>`)">
+                    onclick="filterStructure('all', this, '<?php echo get_field('titulo_btn_estructura') ?: 'ESTRUCTURA'; ?>', `<?php echo esc_attr($intro_estructura); ?>`)">
                 Todos
             </button>
 
@@ -74,14 +85,19 @@ get_header();
             ?>
         </div>
 
-        <button class="qs-btn" onclick="openTab(event, 'equipo')">Equipo de Trabajo</button>
+        <button class="qs-btn" onclick="openTab(event, 'equipo')">
+            <?php echo get_field('titulo_btn_equipo') ?: 'Equipo de Trabajo'; ?>
+        </button>
         
         <div id="submenu-equipo" class="submenu-container">
             <?php 
             $intro_equipo = get_field('tab_equipo_intro'); 
+            // Título dinámico para el filtro "Todos" también
+            $titulo_equipo = get_field('titulo_btn_equipo') ?: 'SECRETARÍA GENERAL';
+            // Convertimos a mayúsculas si es el texto por defecto, si viene del usuario lo dejamos tal cual o forzamos strtoupper si prefieres
             ?>
             <button class="sub-btn-sidebar active" 
-                    onclick="filterTeam('all', this, 'SECRETARÍA GENERAL', `<?php echo esc_attr($intro_equipo); ?>`)">
+                    onclick="filterTeam('all', this, '<?php echo esc_js($titulo_equipo); ?>', `<?php echo esc_attr($intro_equipo); ?>`)">
                 Todos
             </button>
 
@@ -143,7 +159,9 @@ get_header();
             </div>
 
             <div id="estructura" class="tab-content">
-                <h2 id="estructura-dynamic-title" class="qs-title uppercase text-teal">ESTRUCTURA</h2>
+                <h2 id="estructura-dynamic-title" class="qs-title uppercase text-teal">
+                    <?php echo get_field('titulo_btn_estructura') ?: 'ESTRUCTURA'; ?>
+                </h2>
                 <div class="team-intro">
                     <div id="estructura-dynamic-desc" class="qs-text-block">
                         <?php echo get_field('tab_estructura'); ?>
@@ -202,7 +220,9 @@ get_header();
 
             <div id="equipo" class="tab-content">
                 
-                <h2 id="equipo-dynamic-title" class="qs-title uppercase text-teal">SECRETARÍA GENERAL</h2>
+                <h2 id="equipo-dynamic-title" class="qs-title uppercase text-teal">
+                    <?php echo get_field('titulo_btn_equipo') ?: 'SECRETARÍA GENERAL'; ?>
+                </h2>
                 
                 <div class="team-intro">
                     <div id="equipo-dynamic-desc" class="qs-text-block">
@@ -352,5 +372,24 @@ get_header();
         }
     }
 </script>
+
+<hr style="border: 0; border-top: 1px solid #ddd; margin: 30px 0;">
+
+<section class="quick-links-container">
+    <?php 
+    $mis_botones = new WP_Query(array('post_type' => 'boton_home', 'posts_per_page' => -1, 'order' => 'ASC'));
+    if ($mis_botones->have_posts()) : while ($mis_botones->have_posts()) : $mis_botones->the_post(); 
+        $enlace = get_field('enlace_boton');
+        $icono  = get_field('icono_boton');
+    ?>
+        <a href="<?php echo esc_url($enlace); ?>" class="quick-link-item">
+            <div class="icon-wrapper">
+                <div class="bg-icon"></div> 
+                <?php if($icono): ?><img src="<?php echo esc_url($icono); ?>" alt="Icono"><?php else: ?><img src="<?php echo get_template_directory_uri(); ?>/images/workspace_premium_37dp_00A499_FILL0_wght400_GRAD0_opsz40 1.png" alt="Icono"><?php endif; ?>
+            </div>
+            <h3><?php the_title(); ?></h3>
+        </a>
+    <?php endwhile; wp_reset_postdata(); endif; ?>
+</section>
 
 <?php get_footer(); ?>
