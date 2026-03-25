@@ -2,7 +2,7 @@
 Theme Name: Tema Secretaría General USACH
 Author: Branco García
 Description: Tema a medida basado en HTML estático
-Version: 1.0
+Version: 1.3
 */
 * {
     margin: 0;
@@ -23,15 +23,21 @@ Version: 1.0
     --font-main: 'Nunito Sans', sans-serif;
 }
 
+/* IMPORTANTE: Definir tamaño base para que REM funcione con el Zoom de Accesibilidad */
+html {
+    font-size: 100%; 
+}
+
 body {
     font-family: var(--font-main);
     background-color: #FFFFFF;
     overflow-x: hidden; /* Evita scroll horizontal indeseado */
+    font-size: 1rem; /* Base 16px */
 }
 
 /* --- HEADER --- */
 .site-header {
-    padding: 10px 5%; /* Espaciado lateral responsivo */
+    padding: 10px 5%;
     margin-bottom: 20px;
 }
 
@@ -46,12 +52,12 @@ body {
     background: none;
     border: none;
     font-weight: 700;
-    font-size: 18px;
-    color: var(--color-primary); /* Color turquesa según Figma */
+    font-size: 1.125rem;
+    color: var(--color-primary);
     cursor: pointer;
 }
 
-/* Dropdown básico (se puede mejorar con JS) */
+/* Dropdown básico */
 .dropdown-container {
     position: relative;
     display: inline-block;
@@ -64,7 +70,7 @@ body {
     background-color: #f9f9f9;
     min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 100; /* Aumentado para asegurar visibilidad */
 }
 
 .dropdown-container:hover .dropdown-content {
@@ -78,23 +84,19 @@ body {
     display: block;
 }
 
-/* Quitar los puntos y márgenes de los elementos de lista generados por WordPress */
 .dropdown-content li {
-    list-style: none; /* Esto quita el punto/guión */
+    list-style: none;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid #eee; /* Opcional: añade una línea separadora suave */
+    border-bottom: 1px solid #eee;
 }
 
-/* Opcional: Quitar el borde del último elemento para que se vea limpio */
 .dropdown-content li:last-child {
     border-bottom: none;
 }
 
-/* Asegurar que el enlace ocupe todo el espacio del botón */
 .dropdown-content li a {
     display: block; 
-    /* Tus estilos de color y padding ya se aplican por la regla .dropdown-content a */
 }
 
 .header-bottom {
@@ -107,7 +109,7 @@ body {
 .main-nav ul {
     list-style: none;
     display: flex;
-    flex-wrap: wrap; /* Permite que los items bajen si no caben */
+    flex-wrap: wrap;
     gap: 15px;
 }
 
@@ -116,7 +118,6 @@ body {
     align-items: center;
 }
 
-/* La raya separadora | */
 .main-nav li:not(:last-child)::after {
     content: "";
     display: inline-block;
@@ -130,51 +131,44 @@ body {
     text-decoration: none;
     color: var(--color-text-dark);
     font-weight: 700;
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 /* --- HERO SECTION --- */
-.hero-section {
-    width: 100%;
-}
+.hero-section { width: 100%; }
+.hero-image { width: 100%; height: auto; display: block; }
 
-.hero-image {
-    width: 100%;
-    height: auto; /* Mantiene la proporción */
-    display: block;
-}
-
-/* Contenedor de los botones de abajo */
+/* --- QUICK LINKS (CORRECCIÓN CHOQUE DE BOTONES) --- */
 .quick-links-container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
-    /* Padding superior de 20px para dar aire */
     padding: 20px 5% 40px 5%; 
     text-align: center;
 }
-/* Busca tu clase .quick-link-item y asegúrate que tenga esto: */
+
 .quick-link-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px;
-    position: relative;
     
-    /* --- NUEVAS PROPIEDADES PARA QUE PAREZCA BOTÓN --- */
-    text-decoration: none; /* Quita el subrayado feo de los links */
-    color: inherit;        /* Hereda el color gris original, no el azul de link */
-    cursor: pointer;       /* Manito al pasar el mouse */
-    transition: transform 0.2s ease; /* Opcional: animación suave */
+    /* CAMBIO: Flexibilidad para soportar texto grande */
+    flex: 0 1 200px; /* Base 200px, puede encogerse pero no crecer infinitamente */
+    min-width: 160px; /* Ancho mínimo para que no se aplaste */
+    
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-bottom: 20px;
 }
 
-/* Opcional: Efecto al pasar el mouse para que se sienta "presionable" */
 .quick-link-item:hover {
-    transform: translateY(-5px); /* Se mueve un poquito hacia arriba */
+    transform: translateY(-5px);
 }
 
-/* Líneas separadoras entre items */
 .quick-link-item:not(:last-child)::after {
     content: "";
     position: absolute;
@@ -185,10 +179,9 @@ body {
     background-color: #C4C4C4;
 }
 
-@media (max-width: 768px) {
-    .quick-link-item:not(:last-child)::after {
-        display: none; /* En celular quitamos las líneas */
-    }
+/* En tablets o móviles quitamos la línea separadora para evitar líos */
+@media (max-width: 900px) {
+    .quick-link-item:not(:last-child)::after { display: none; }
 }
 
 .icon-wrapper {
@@ -201,24 +194,30 @@ body {
     align-items: center;
 }
 
-/* El fondo verde de los iconos */
 .bg-icon {
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: var(--color-primary);
-    opacity: 0.1; /* Ajustar opacidad si es necesario */
-    border-radius: 50%; /* O cuadrado según la imagen */
+    opacity: 0.1;
+    border-radius: 50%;
     z-index: -1;
 }
 
 .quick-link-item h3 {
     color: var(--color-text-gray);
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
+    width: 100%;
+    
+    /* SOLUCIÓN AL CHOQUE DE TEXTO: */
+    overflow-wrap: break-word;
+    word-wrap: break-word; 
+    hyphens: auto;
+    line-height: 1.3;
 }
 
-/* --- ESTILOS COMPARTIDOS (TÍTULOS VERDES) --- */
+/* --- TÍTULOS VERDES --- */
 .section-title-bar {
     width: 100%;
     background: linear-gradient(90deg, var(--color-gradient-start) 0%, var(--color-gradient-mid) 73%, var(--color-gradient-end) 100%);
@@ -228,20 +227,15 @@ body {
 
 .section-title-bar h2 {
     color: #FFFFFF;
-    font-size: 27px;
+    font-size: 1.6875rem;
     font-weight: 700;
     text-transform: uppercase;
 }
 
 /* --- NOTICIAS GRID --- */
-.news-section {
-    padding-bottom: 50px;
-}
-
+.news-section { padding-bottom: 50px; }
 .news-grid {
     display: grid;
-    /* ESTO ES LA MAGIA RESPONSIVA: */
-    /* Crea tantas columnas como quepan de mínimo 350px */
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
     gap: 40px;
     padding: 0 5%;
@@ -249,31 +243,49 @@ body {
     margin: 0 auto;
 }
 
-.news-card {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.news-card { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    justify-content: space-between; 
+    min-height: 100%;
+    /* NUEVO: Espaciado inferior, bordes redondeados y contención de la imagen */
+    padding-bottom: 25px; 
+    border-radius: 12px; 
+    overflow: hidden; 
 }
 
 .news-image-placeholder {
     width: 100%;
     height: 250px;
-    background-color: var(--color-bg-light); /* Gris de Figma */
-    /* Aquí iría: background-image: url(...) */
+    background-color: var(--color-bg-light);
+    overflow: hidden;
 }
 
 .news-title {
     color: var(--color-primary);
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 900;
     line-height: 1.4;
     text-transform: uppercase;
+    /* NUEVO: Espacio a los lados para que no choque con la caja en modo oscuro */
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .news-summary {
     color: var(--color-text-gray);
-    font-size: 16px; /* Bajé un poco de 18px para mejor lectura */
+    font-size: 1rem;
     line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+    /* NUEVO: Espacio a los lados */
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .btn-read-more {
@@ -285,13 +297,103 @@ body {
     text-decoration: none;
     font-weight: 700;
     text-align: center;
-    align-self: flex-start; /* Alineado a la izquierda */
+    align-self: flex-start;
     transition: all 0.3s ease;
+    /* NUEVO: Espacio a los lados */
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .btn-read-more:hover {
     background-color: var(--color-orange);
     color: white;
+}
+
+/* --- PAGINACIÓN NOTICIAS --- */
+.news-pagination {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.pagination-btn, .pagination-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 8px;
+    border: 2px solid var(--color-primary);
+    background-color: #FFFFFF;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    margin: 0 4px;
+}
+
+.pagination-btn:hover:not(.pagination-disabled) {
+    background-color: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.pagination-current {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    cursor: default;
+}
+
+.pagination-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: #cccccc;
+    color: #cccccc;
+}
+
+.pagination-arrow {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* Modo Oscuro - Paginación */
+body.inverted-colors .pagination-btn,
+body.inverted-colors .pagination-num {
+    border-color: var(--color-primary);
+    background-color: #2a2e33;
+    color: var(--color-primary);
+}
+
+body.inverted-colors .pagination-btn:hover:not(.pagination-disabled) {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+}
+
+body.inverted-colors .pagination-current {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    border-color: var(--color-primary);
+}
+
+body.inverted-colors .pagination-disabled {
+    opacity: 0.3;
+    border-color: #666666;
+    color: #666666;
+}
+
+/* Responsive - Paginación solo en Desktop */
+@media (max-width: 900px) {
+    .news-pagination {
+        display: none;
+    }
 }
 
 /* --- VIDEOS GRID --- */
@@ -303,10 +405,59 @@ body {
     margin-bottom: 50px;
 }
 
-.video-item img {
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+.video-item {
+    position: relative; 
+    background-color: transparent; 
+    border-radius: 12px; 
+    overflow: hidden;
+    transition: transform 0.3s ease; 
+    width: 100%; 
+    max-width: 600px; 
+    margin: 0 auto;
+}
+.video-item:hover { transform: translateY(-5px); }
+.video-item a { text-decoration: none; display: block; }
+
+.video-title {
+    font-family: 'Nunito Sans', sans-serif; 
+    font-size: 1.125rem; 
+    font-weight: 800;
+    color: var(--color-text-dark); 
+    margin: 0 0 15px 0; 
+    text-align: left; 
+    line-height: 1.3;
+    /* Ajuste para que el título no rompa el layout si es muy largo */
+    white-space: normal; 
+    overflow: hidden; 
+    padding: 0 5px;
+}
+
+.video-item:hover .video-title { color: var(--color-primary); }
+
+.video-thumbnail-wrapper {
+    position: relative; 
+    width: 100%; 
+    padding-bottom: 56.25%; 
+    background-color: #000;
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+    overflow: hidden;
+}
+.video-thumb { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.95; transition: opacity 0.3s, transform 0.3s; }
+.video-item:hover .video-thumb { opacity: 1; transform: scale(1.05); }
+
+.play-icon {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: rgba(0, 164, 153, 0.9); color: white; width: 60px; height: 60px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; padding-left: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease; z-index: 2;
+}
+.video-item:hover .play-icon { background: #EA7600; transform: translate(-50%, -50%) scale(1.1); }
+
+@media (max-width: 768px) {
+    .videos-grid { grid-template-columns: 1fr; }
+    .video-title { font-size: 1rem; }
 }
 
 /* --- FOOTER --- */
@@ -320,910 +471,1380 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Para que se adapte en móviles */
+    /* Forzamos que los 3 bloques se mantengan en una sola fila en PC */
+    flex-wrap: nowrap; 
     gap: 30px;
     max-width: 1600px;
     margin: 0 auto;
 }
 
-.footer-info {
-    text-align: center;
-    flex: 1; /* Toma el espacio central */
-    min-width: 300px;
+/* Contenedores laterales para los logos */
+.footer-logo, 
+.footer-partner {
+    flex: 0 0 25%; /* Cada logo toma como máximo el 25% del ancho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0; /* Clave de seguridad para evitar desbordes */
 }
 
-.footer-info h3 {
-    font-size: 18px;
-    font-weight: 700;
+/* LA REGLA CLAVE EN ESCRITORIO */
+.footer-logo img, 
+.footer-partner img {
+    max-width: 100%;
+    width: auto;
+    max-height: 90px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Contenedor central de información */
+.footer-info { 
+    text-align: center; 
+    flex: 1 1 50%; /* El texto central toma el 50% restante del ancho */
+    min-width: 300px; 
+}
+
+.footer-info h3 { 
+    font-size: 1.125rem; 
+    font-weight: 700; 
     margin-bottom: 10px;
+    color: white; 
 }
 
-.footer-info p {
-    font-size: 14px; /* Un poco más pequeño que el título */
+.footer-info p { 
+    font-size: 0.9375rem; 
     line-height: 1.6;
+    color: white; 
 }
 
+/* ==========================================================================
+   RESPONSIVIDAD CELULARES Y TABLETS
+   ========================================================================== */
 @media (max-width: 900px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
+    .site-footer {
+        padding: 40px 20px; /* Reducimos padding lateral en móvil para dar más espacio */
+    }
+
+    .footer-container { 
+        flex-direction: column; 
+        text-align: center; 
+        gap: 0; /* Quitamos el gap general para controlarlo con margin */
+        overflow: hidden; /* Seguridad extra contra desbordes */
+    }
+
+    /* Los contenedores ahora son estrictos al ancho de la pantalla */
+    .footer-logo, 
+    .footer-partner, 
+    .footer-info {
+        flex: 1 1 auto;
+        width: 100%;
+        max-width: 100vw;
+        min-width: 0; /* TRUCO 1: Evita que la imagen ancha estire la pantalla */
+    }
+
+    /* Ordenamos y separamos visualmente */
+    .footer-logo { order: 1; }      
+    .footer-info { 
+        order: 2; 
+        margin: 40px 0; /* Separación vertical arriba y abajo del texto */
+        min-width: 0;
+    }      
+    .footer-partner { order: 3; }   
+
+    /* TRUCO 2: Obligamos a la imagen a no tocar los bordes del celular */
+    .footer-logo img, 
+    .footer-partner img {
+        max-width: 90%; 
+        max-height: 100px; 
+        height: auto;
+        width: auto;
+        object-fit: contain;
+        margin: 0 auto; /* Centrado perfecto */
     }
 }
-
-/* --- ESTILOS PÁGINA QUIENES SOMOS --- */
-
-/* Para la página de Quiénes Somos (con sidebar) */
+/* ==========================================================================
+   PÁGINA QUIENES SOMOS (CORRECCIONES DE LAYOUT PARA ACCESIBILIDAD)
+   ========================================================================== */
 .qs-layout {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    /* CAMBIO CLAVE 1: Sidebar con ancho flexible y mínimo seguro */
+    /* Antes: 250px 1fr. Ahora: minmax(250px, 30%) 1fr */
+    grid-template-columns: minmax(250px, 25%) 1fr; 
     gap: 40px;
     max-width: 1400px;
-    /* Margen inferior suave de 20px */
     margin: 40px auto 20px auto; 
     padding: 0 20px;
     min-height: 600px;
-}
-/* --- SIDEBAR --- */
-.qs-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    /* Quitamos el borde derecho porque ahora la tarjeta de la derecha tiene su propio fondo */
+    align-items: start; /* Alineación superior para evitar estiramientos raros */
 }
 
+/* Sidebar */
+.qs-sidebar { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    z-index: 10; /* Asegurar que no quede debajo de la tarjeta gris */
+    position: relative;
+}
+
+/* Botones Sidebar (Menú Principal) */
 .qs-btn {
     background-color: transparent;
     border: none;
-    padding: 15px 20px;
     text-align: left;
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
     color: #394049;
     cursor: pointer;
     transition: all 0.3s ease;
-    border-radius: 8px; /* Un poco de redondeo al hover */
+    border-radius: 8px;
+    
+    /* CAMBIO CLAVE 2: Permitir texto multilínea */
+    white-space: normal !important;
+    word-break: break-word;
+    height: auto !important; 
+    padding: 15px 20px;
+    line-height: 1.4;
 }
 
-.qs-btn:hover {
-    background-color: #e0e0e0;
-    color: #00A499;
+.qs-btn:hover { background-color: #e0e0e0; color: #00A499; }
+.qs-btn.active { color: #00A499; background-color: #f0fcfb; font-weight: 800; }
+
+/* Submenús */
+.submenu-container { display: none; flex-direction: column; margin-bottom: 5px; background-color: #fff; }
+
+/* Botones Submenú */
+.sub-btn-sidebar {
+    background: transparent; border: none; text-align: left;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1.125rem; font-weight: 400; color: #394049;
+    cursor: pointer; transition: all 0.2s ease; border-left: 3px solid transparent;
+    
+    /* CAMBIO CLAVE 3: Permitir texto multilínea en submenús */
+    white-space: normal !important;
+    word-break: break-word;
+    height: auto !important;
+    padding: 12px 20px 12px 35px;
+    line-height: 1.4;
 }
 
-.qs-btn.active {
-    color: #00A499;
-    background-color: #f0fcfb; /* Fondo sutil para el activo */
-    font-weight: 800;
+.sub-btn-sidebar.nivel-3 { padding-left: 55px; font-size: 1.125rem; }
+.sub-btn-sidebar.nivel-4 { padding-left: 75px; font-size: 0.9375rem; color: #999; }
+.sub-btn-sidebar:hover { color: #EA7600; background-color: #f9f9f9; }
+.sub-btn-sidebar.active {
+    color: #EA7600; font-weight: 700; border-left: 3px solid #EA7600; background-color: #fff8f0;
 }
 
-/* --- TARJETA CENTRAL (ESTILO FIGMA) --- */
+/* Área de Contenido (Tarjeta Gris) */
+.qs-content-area {
+    min-width: 0; /* Truco de CSS Grid para evitar desbordes con contenido ancho */
+    z-index: 5;
+}
+
 .qs-card {
     position: relative;
     background: #F4F4F4;
     box-shadow: 0px 9.75px 9.75px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
-    padding: 60px 40px; /* Aumenté el padding superior/inferior para dar aire */
-    min-height: 600px;  /* Altura mínima necesaria para que el centrado se note */
-    
-    /* --- NUEVAS LÍNEAS PARA CENTRAR --- */
-    display: flex;           /* Convertimos la caja en flexible */
-    flex-direction: column;  /* El contenido va de arriba a abajo */
-    justify-content: center; /* ESTO centra verticalmente el contenido visible */
-}
-/* --- LA CRUZ DE CIERRE --- */
-.close-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-    width: 20px; /* Tamaño de la X */
-    height: 20px;
-}
-
-.close-icon img {
-    width: 100%;
-    height: auto;
-}
-
-/* --- CONTENIDO --- */
-.tab-content {
-    display: none;
-    animation: fadeIn 0.5s;
-}
-
-.active-content {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.qs-title {
-    font-size: 27px;
-    font-weight: 800;
-    color: #00A499; /* Título en verde como en Figma */
-    margin-bottom: 25px;
-    text-transform: uppercase;
-}
-
-.qs-subtitle {
-    font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 10px;
-}
-
-.qs-text-block {
-    font-size: 18px;
-    line-height: 1.6;
-    color: #394049;
-    font-weight: 500;
-    margin-bottom: 20px;
-    text-align: justify;
-}
-
-/* Agrega espacio entre párrafos dentro del bloque de texto */
-.qs-text-block p {
-    margin-bottom: 20px; /* Este es el "poquito de espacio" (puedes subirlo a 25px si quieres más) */
-    line-height: 1.8;    /* Esto mejora la lectura separando las líneas del mismo párrafo */
-}
-
-/* Opcional: Quitar el margen al último párrafo para que no empuje el borde de abajo */
-.qs-text-block p:last-child {
-    margin-bottom: 0;
-}
-
-.text-teal { color: #00A499; }
-
-/* --- GRILLA DEL EQUIPO --- */
-.team-grid {
-    display: grid;
-    /* Grid responsiva */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
-.team-card {
+    padding: 60px 40px;
+    min-height: 600px;
+    height: auto !important; /* Permitir crecer si el texto crece */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-/* --- LA MAGIA DEL MARCO Y LA FOTO --- */
-.photo-frame-wrapper {
-    position: relative;
-    width: 140px; /* Tamaño total del conjunto */
-    height: 140px;
-    margin-bottom: 15px;
-    display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-/* El marco (overlay) */
-.frame-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2; /* Se pone ENCIMA de la foto */
-    pointer-events: none; /* Permite clicks a través del marco si fuera necesario */
+/* Icono cerrar */
+.close-icon { position: absolute; top: 20px; right: 20px; cursor: pointer; width: 20px; height: 20px; }
+.close-icon img { width: 100%; height: auto; }
+
+/* Contenidos Tab */
+.tab-content { display: none; animation: fadeIn 0.5s; }
+.active-content { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.qs-title {
+    font-size: 1.6875rem; font-weight: 800; color: #00A499; margin-bottom: 25px; text-transform: uppercase;
+}
+.qs-subtitle { font-size: 1.125rem; font-weight: 800; margin-bottom: 10px; }
+.qs-text-block { font-size: 1.125rem; line-height: 1.6; color: #394049; font-weight: 500; margin-bottom: 20px; text-align: justify; }
+.qs-text-block p { margin-bottom: 20px; line-height: 1.8; }
+.qs-text-block p:last-child { margin-bottom: 0; }
+.text-teal { color: #00A499; }
+
+/* --- EQUIPO Y ESTRUCTURA (CORRECCIÓN CHOQUE CORREOS) --- */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px !important; /* Más espacio entre tarjetas para evitar choques */
+    margin-top: 40px;
+}
+.team-card { 
+    display: flex; flex-direction: column; align-items: center; text-align: center; 
+    width: 100%; /* Asegurar que use el ancho de la celda grid */
 }
 
-/* La foto de la persona */
-.person-photo {
-    width: 80%;  /* Ajusta este % según qué tan grueso sea tu marco.png */
-    height: 80%; 
-    border-radius: 50%; /* Foto circular */
-    object-fit: cover;
-    z-index: 1; /* Se pone DEBAJO del marco */
+.photo-frame-wrapper {
+    position: relative; width: 140px; height: 140px; margin-bottom: 15px; display: flex; justify-content: center; align-items: center;
 }
+.frame-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.person-photo { width: 80%; height: 80%; border-radius: 50%; object-fit: cover; z-index: 1; }
 
-.member-name {
-    font-size: 16px;
-    font-weight: 800;
-    color: #394049;
-    margin-bottom: 5px;
+.member-name { font-size: 1rem; font-weight: 800; color: #394049; margin-bottom: 5px; }
+.member-role { font-size: 0.875rem; font-weight: 700; color: #00A499; line-height: 1.2; word-wrap: break-word; }
+
+/* CAMBIO CLAVE 4: Corrección de Correos */
+.member-email { 
+    margin-top: 5px; 
+    font-size: 0.875rem; 
+    line-height: 1.3;
 }
-
-.member-role {
-    font-size: 14px;
-    font-weight: 700;
-    color: #00A499;
-    line-height: 1.2;
+.member-email a { 
+    color: #EA7600; text-decoration: none; font-weight: 700; transition: color 0.2s; 
+    
+    /* Esto rompe el correo si es muy largo para que baje a la siguiente línea */
+    word-break: break-all; 
+    overflow-wrap: break-word; 
+    display: inline-block; 
 }
+.member-email a:hover { color: #00A499; text-decoration: underline; }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
+/* Responsive ajustes - MENÚ MÓVIL 3 FILAS HORIZONTALES */
+@media (max-width: 1024px) {
+
     .qs-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+        box-sizing: border-box;
     }
-    
+
     .qs-sidebar {
+        flex-direction: column;
+        overflow: hidden;
+        padding-bottom: 0;
+        margin-bottom: 10px;
+        gap: 0;
+        min-width: 0;
+    }
+
+    .qs-main-buttons-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    /* ===== FILA HORIZONTAL SCROLLABLE (Genérica) ===== */
+    .mobile-main-row,
+    .mobile-sub-row {
+        display: flex;
         flex-direction: row;
+        flex-wrap: nowrap;
         overflow-x: auto;
-        padding-bottom: 15px;
-        margin-bottom: 20px;
+        -webkit-overflow-scrolling: touch;
+        gap: 8px;
+        padding: 6px 2px 12px 2px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0,0,0,0.25) transparent;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
-    
-    .qs-btn {
-        white-space: nowrap;
+    .mobile-main-row::-webkit-scrollbar,
+    .mobile-sub-row::-webkit-scrollbar {
+        height: 4px;
+    }
+    .mobile-main-row::-webkit-scrollbar-track,
+    .mobile-sub-row::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .mobile-main-row::-webkit-scrollbar-thumb,
+    .mobile-sub-row::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.25);
+        border-radius: 4px;
+    }
+
+    /* ===== FILA 1: Botones Principales (pill style) ===== */
+    .mobile-main-row .qs-btn {
+        white-space: nowrap !important;
+        flex-shrink: 0;
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        border-radius: 25px;
         background: #fff;
-        border: 1px solid #ddd;
-        margin-right: 10px;
+        border: 1px solid #ccc;
+        margin: 0;
+        line-height: 1.2;
     }
-    
+    .mobile-main-row .qs-btn.active {
+        background: var(--color-primary);
+        color: white;
+        border-color: var(--color-primary);
+    }
+
+    /* ===== FILAS 2 y 3: Sub-botones (pill style) ===== */
+    .mobile-sub-row .sub-btn-sidebar,
+    .mobile-sub-row .sub-btn-sidebar.nivel-2,
+    .mobile-sub-row .sub-btn-sidebar.nivel-3 {
+        white-space: nowrap !important;
+        flex-shrink: 0;
+        padding: 8px 16px !important;
+        padding-left: 16px !important;
+        font-size: 0.85rem;
+        border-radius: 25px;
+        border: 1px solid #ccc !important;
+        border-left: 1px solid #ccc !important;
+        background: #f0f0f0;
+        margin: 0;
+        line-height: 1.2;
+        word-break: normal !important;
+    }
+    .mobile-sub-row .sub-btn-sidebar.active {
+        background: var(--color-orange) !important;
+        color: white !important;
+        border-color: var(--color-orange) !important;
+        font-weight: 700;
+    }
+    .mobile-sub-row .sub-btn-sidebar:hover {
+        background: #e5e5e5;
+    }
+    .mobile-sub-row .sub-btn-sidebar.active:hover {
+        background: var(--color-orange) !important;
+    }
+
+    /* Submenu container en móvil: columna para apilar filas */
+    .submenu-container {
+        flex-direction: column !important;
+        background-color: transparent;
+        margin-bottom: 0;
+    }
+
+    /* Ocultar sub-botones sueltos: solo visibles dentro de .mobile-sub-row */
+    .submenu-container > .sub-btn-sidebar {
+        display: none !important;
+    }
+
+    /* ===== Dark Mode para filas móviles ===== */
+    body.inverted-colors .mobile-main-row .qs-btn {
+        background: #333;
+        border-color: #555;
+        color: #ddd;
+    }
+    body.inverted-colors .mobile-main-row .qs-btn.active {
+        background: var(--color-primary);
+        color: white;
+        border-color: var(--color-primary);
+    }
+    body.inverted-colors .mobile-sub-row .sub-btn-sidebar {
+        background: #2a2a2a !important;
+        border-color: #444 !important;
+        color: #ccc !important;
+    }
+    body.inverted-colors .mobile-sub-row .sub-btn-sidebar.active {
+        background: var(--color-orange) !important;
+        color: white !important;
+        border-color: var(--color-orange) !important;
+    }
+
     .qs-card {
         padding: 20px;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: auto;
+    }
+
+    .qs-content-area {
+        min-width: 0;
+        max-width: 100%;
     }
 }
 
-/* Para páginas simples como Consejo de Distinciones */
+/* --- SIMPLE LAYOUT --- */
 .simple-layout {
     max-width: 1600px;
-    /* Mismo margen suave de 20px abajo */
     margin: 40px auto 20px auto; 
     padding: 0 20px;
 }
+.qs-text-block ul { margin-left: 20px; margin-bottom: 20px; list-style-type: disc; }
+.qs-text-block li { margin-bottom: 10px; color: #394049; }
 
-/* Estilos para listas dentro de textos (como la lista de integrantes) */
-.qs-text-block ul {
-    margin-left: 20px;
-    margin-bottom: 20px;
-    list-style-type: disc;
-}
-
-.qs-text-block li {
-    margin-bottom: 10px;
-    color: #394049;
-}
-
-
-/* Estilos para el contenido del Editor WYSIWYG */
-
+/* --- ENLACES GENÉRICOS --- */
 .qs-text-block p a, 
 .qs-text-block li a,
 .qs-text-block a {
     color: #EA7600 !important;
     font-weight: 800 !important;
-    text-decoration: underline; /* Subrayado para que se note que es link */
-}
-
-.qs-text-block a:hover {
-    color: #00A499 !important; /* Verde al pasar el mouse */
-}
-/* 2. Párrafos */
-.qs-text-block p {
-    margin-bottom: 20px; /* Espacio entre párrafos */
-    line-height: 1.6; /* Altura de línea para leer mejor */
-    color: #394049; /* Gris oscuro */
-}
-
-/* 3. Listas (Puntos y Números) */
-.qs-text-block ul, 
-.qs-text-block ol {
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
-
-.qs-text-block li {
-    margin-bottom: 10px;
-}
-
-/* Estilos automáticos para títulos dentro del editor */
-.qs-text-block h3 {
-    color: #00A499 !important; /* El !important fuerza el color */
-    font-size: 18px;
-    font-weight: 800;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    font-family: 'Nunito Sans', sans-serif;
-     /* Opcional: Para que se vea más corporativo */
-}
-
-/* Agreguemos también el H2 por si el cliente pone el título principal en el editor */
-.qs-text-block h2 {
-    color: #00A499 !important;
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    font-family: 'Nunito Sans', sans-serif;
-    text-transform: uppercase;
-}
-
-
-/* Agreguemos también el H2 por si el cliente pone el título principal en el editor */
-.qs-text-block h1 {
-    color: #00A499 !important;
-    font-size: 24px;
-    font-weight: 800;
-    margin-bottom: 20px;
-    font-family: 'Nunito Sans', sans-serif;
-    text-transform: uppercase;
-}
-
-
-/* --- ARREGLO IMÁGENES WYSIWYG --- */
-
-/* 1. Habilitar las clases nativas de WordPress */
-/* Cuando le das click a "Alinear al centro" en el editor, WP agrega esta clase */
-.aligncenter {
-    display: block;
-    margin: 0 auto;
-    clear: both;
-}
-
-/* Cuando le das click a "Alinear izquierda" */
-.alignleft {
-    float: left;
-    margin-right: 1.5em;
-    margin-bottom: 1.5em;
-}
-
-/* Cuando le das click a "Alinear derecha" */
-.alignright {
-    float: right;
-    margin-left: 1.5em;
-    margin-bottom: 1.5em;
-}
-
-/* 2. FORZAR centrado automático dentro de tus bloques de texto */
-/* Esto asegura que cualquier imagen suelta dentro de tus pestañas se centre y no se salga del ancho */
-.qs-text-block img {
-    display: block;        /* Comportarse como caja, no como texto */
-    margin-left: auto;     /* Empuje automático izquierda */
-    margin-right: auto;    /* Empuje automático derecha */
-    max-width: 100%;       /* Que nunca sea más ancha que la tarjeta */
-    height: auto;          /* Que no se deforme */
-    margin-bottom: 20px;   /* Espacio abajo para que no se pegue al texto */
-    margin-top: 20px;      /* Espacio arriba */
-}
-
-
-/* --- ESTILOS SUB-NAVEGACIÓN (ESTRUCTURA Y EQUIPO) --- */
-
-/* Contenedor de botones internos */
-.sub-nav-container, .filter-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
-}
-
-/* Estilo de los Sub-Botones */
-.sub-btn, .filter-btn {
-    background: white;
-    border: 1px solid #00A499;
-    color: #00A499;
-    padding: 8px 15px;
-    border-radius: 20px; /* Redonditos */
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.sub-btn:hover, .filter-btn:hover {
-    background: #00A499;
-    color: white;
-}
-
-/* Botón Activo */
-.sub-btn.active, .filter-btn.active {
-    background: #00A499;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0,164,153,0.3);
-}
-
-/* Animación suave al filtrar */
-.team-card {
-    transition: all 0.3s ease;
-}
-
-/* --- ESTILOS PESTAÑAS EXTERNAS --- */
-.external-tabs {
-    margin-bottom: 0 !important; /* Pegado a la tarjeta de abajo */
-    padding-left: 10px;
-    border-bottom: none !important; /* Quitamos la línea de abajo */
-}
-
-.external-tabs .sub-btn,
-.external-tabs .filter-btn {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    margin-bottom: 0;
-    background: #eee; /* Gris clarito inactivo */
-    border: none;
-    padding: 12px 20px;
-}
-
-.external-tabs .sub-btn.active,
-.external-tabs .filter-btn.active {
-    background: #F4F4F4; /* MISMO COLOR que la tarjeta .qs-card */
-    color: #00A499;
-    position: relative;
-    top: 2px; /* Truco visual para que parezca unido a la tarjeta */
-    z-index: 2;
-    box-shadow: 0 -4px 6px rgba(0,0,0,0.05);
-}
-
-.qs-card {
-    /* Aseguramos que la tarjeta tenga z-index menor para el efecto de pestaña */
-    z-index: 1;
-    border-top-left-radius: 0; /* Opcional: cuadrar esquina si la pestaña empieza ahí */
-}
-
-/* --- NUEVOS ESTILOS SIDEBAR JERÁRQUICO --- */
-/* --- SIDEBAR JERÁRQUICO (SUB-MENÚS) --- */
-
-/* Contenedor que se despliega debajo del botón principal */
-.submenu-container {
-    display: none; /* Se oculta por JS */
-    flex-direction: column;
-    /* Un pequeño margen para separar del botón padre */
-    margin-bottom: 5px; 
-    /* Fondo opcional para distinguir el bloque de sub-opciones */
-    background-color: #fff; 
-}
-
-/* Estilo del SUB-BOTÓN (Hijo directo) */
-.sub-btn-sidebar {
-    background: transparent;
-    border: none;
-    text-align: left;
-    
-    /* Mismo padding y fuente que el botón padre, pero... */
-    padding: 12px 20px 12px 35px; /* Más padding a la izquierda para indentar */
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 18px; /* Mismo tamaño que el padre */
-    font-weight: 400; /* Sin negrita (Normal) */
-    color: #394049;   /* Mismo gris */
-    
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent; /* Línea lista para activarse */
-}
-
-/* Estilo del SUB-SUB-BOTÓN (Nieto - Nivel 3) */
-.sub-btn-sidebar.nivel-3 {
-    padding-left: 55px; /* Más indentación aún */
-    font-size: 18px;    /* Opcional: un pelín más chico o igual */
-}
-
-/* Hover en sub-botones */
-.sub-btn-sidebar:hover {
-    color: #EA7600; /* Naranja al pasar mouse */
-    background-color: #f9f9f9;
-}
-
-/* SUB-BOTÓN ACTIVO */
-.sub-btn-sidebar.active {
-    color: #EA7600; /* Texto Naranja */
-    font-weight: 700; /* Negrita al activarse para destacar */
-    /* La línea naranja vertical a la izquierda (Estilo árbol) */
-    border-left: 3px solid #EA7600; 
-    background-color: #fff8f0; /* Fondo naranja muy sutil */
-}
-
-/* Ajuste para que el Sidebar no se vea cortado si la lista es larga */
-.qs-sidebar {
-    height: fit-content;
-}
-
-/* Estilo del SUB-SUB-BOTÓN (Nieto - Nivel 4) */
-.sub-btn-sidebar.nivel-4 {
-    padding-left: 75px; /* Más indentación que el nivel 3 */
-    font-size: 15px;
-    color: #999;
-}
-
-/* Estilo para el email en las tarjetas de estructura */
-.member-email {
-    margin-top: 5px;
-    font-size: 14px;
-}
-
-.member-email a {
-    color: #EA7600; /* Naranja */
-    text-decoration: none;
-    font-weight: 700;
-    transition: color 0.2s;
-}
-
-.member-email a:hover {
-    color: #00A499; /* Verde al pasar el mouse */
     text-decoration: underline;
 }
-/* --- ESTILOS NOTICIA INDIVIDUAL (single.php) --- */
+.qs-text-block a:hover { color: #00A499 !important; }
 
-.single-news-container {
-    max-width: 1500px; /* Aumentado para ocupar más pantalla */
-    margin: 40px auto;
-    padding: 0 20px; /* Mantiene márgenes de seguridad en móviles */
+/* --- ARREGLO IMÁGENES --- */
+.aligncenter { display: block; margin: 0 auto; clear: both; }
+.alignleft { float: left; margin-right: 1.5em; margin-bottom: 1.5em; }
+.alignright { float: right; margin-left: 1.5em; margin-bottom: 1.5em; }
+
+.qs-text-block img {
+    display: block; margin-left: auto; margin-right: auto;
+    max-width: 100%; height: auto; margin-bottom: 20px; margin-top: 20px;
 }
 
-.article-header {
-    text-align: center;
-    margin-bottom: 30px;
+/* --- SUB-NAVEGACIÓN --- */
+.sub-nav-container, .filter-container {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px;
+    border-bottom: 1px solid #ddd; padding-bottom: 15px;
 }
-
-.article-category a {
-    color: var(--color-primary); /* Verde corporativo */
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 14px;
-    text-decoration: none;
+.sub-btn, .filter-btn {
+    background: white; border: 1px solid #00A499; color: #00A499;
+    padding: 8px 15px; border-radius: 20px; font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700; cursor: pointer; transition: all 0.3s ease;
 }
+.sub-btn:hover, .filter-btn:hover { background: #00A499; color: white; }
+.sub-btn.active, .filter-btn.active { background: #00A499; color: white; box-shadow: 0 4px 6px rgba(0,164,153,0.3); }
 
-.article-title {
-    font-size: 36px;
-    color: var(--color-primary); /* CAMBIO: Título en Verde */
-    margin: 15px 0;
-    line-height: 1.2;
-    font-weight: 900; /* Un poco más grueso para destacar */
-}
-
-.article-meta {
-    color: var(--color-text-gray);
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.article-featured-image {
-    margin-bottom: 30px;
-}
-
-.article-featured-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-/* --- ESTILOS DEL RESUMEN --- */
+/* --- SINGLE NEWS --- */
+.single-news-container { max-width: 1500px; margin: 40px auto; padding: 0 20px; }
+.article-header { text-align: center; margin-bottom: 30px; }
+.article-category a { color: var(--color-primary); text-transform: uppercase; font-weight: 700; font-size: 0.875rem; text-decoration: none; }
+.article-title { font-size: 2.25rem; color: var(--color-primary); margin: 15px 0; line-height: 1.2; font-weight: 900; }
+.article-meta { color: var(--color-text-gray); font-size: 0.875rem; font-weight: 600; }
+.article-featured-image { margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.article-featured-image img { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
 .article-excerpt-wrapper {
-    margin-bottom: 30px;
-    border-left: 4px solid var(--color-primary); /* Decoración lateral verde */
-    padding-left: 20px;
-    background-color: #f9f9f9; /* Fondo muy suave para destacar el bloque */
-    padding: 20px;
-    border-radius: 0 8px 8px 0;
+    margin-bottom: 30px; border-left: 4px solid var(--color-primary);
+    padding-left: 20px; background-color: #f9f9f9; padding: 20px; border-radius: 0 8px 8px 0;
+}
+.excerpt-label { font-size: 1.375rem; color: var(--color-primary); font-weight: 800; margin-bottom: 10px; text-transform: uppercase; }
+.article-lead { font-size: 1.125rem; line-height: 1.6; color: var(--color-text-dark); font-style: italic; font-weight: 400; }
+.article-content img { max-width: 100%; height: auto; }
+
+/* --- UTILIDADES --- */
+.price-table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 0.95em; }
+.price-table th { background-color: var(--color-primary); color: white; padding: 12px; text-align: left; }
+.price-table td { border: 1px solid #ddd; padding: 10px; }
+.price-table tr:nth-child(even) { background-color: #f9f9f9; }
+.vistos-box { background: #f9f9f9; padding: 20px; border-left: 4px solid var(--color-primary); font-size: 0.9em; margin-top: 15px; }
+
+/* --- BOTÓN DESTACADO ELECCIONES (CORREGIDO BLINDADO) --- */
+.qs-text-block a.highlight-link,
+a.highlight-link {
+    display: inline-block !important;
+    background-color: #EA7600 !important; /* Verde base */
+    color: #ffffff !important; 
+    padding: 12px 25px !important;
+    border-radius: 5px !important;
+    text-decoration: none !important;
+    font-weight: 800 !important;
+    margin: 15px 0 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    border: none !important;
 }
 
-/* La palabra "Resumen:" */
-.excerpt-label {
-    font-size: 22px; /* Grande */
-    color: var(--color-primary); /* Celeste/Verde corporativo */
-    font-weight: 800;
-    margin-bottom: 10px;
-    text-transform: uppercase;
+.qs-text-block a.highlight-link:hover,
+a.highlight-link:hover {
+    background-color: var(--color-primary) !important; /* Verde más oscuro */
+    color: #ffffff !important; /* BLANCO SIEMPRE */
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 8px rgba(0,0,0,0.15) !important;
+    text-decoration: none !important;
 }
 
-/* El texto del resumen */
-.article-lead {
-    font-size: 18px; /* Tamaño normal de lectura */
-    line-height: 1.6;
-    color: var(--color-text-dark); /* Gris oscuro normal */
-    font-style: italic; /* Cursiva para diferenciarlo del cuerpo */
-    font-weight: 400; /* Peso normal */
+/* --- INFOGRAFÍAS --- */
+.infografia-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.infografia-item img { width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: block; }
+@media (max-width: 768px) { .infografia-grid { grid-template-columns: 1fr; } }
+
+/* --- BOTONES TRANSPARENCIA (CORREGIDOS Y FLEXIBLES) --- */
+/* --- BOTONES TRANSPARENCIA (FLEXIBLE & ACCESIBLE) --- */
+
+.transparencia-btn-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
 }
 
-/* Eliminar márgenes extra del párrafo automático de WP dentro del resumen */
-.article-lead p {
-    margin: 0;
-}
-
-/* --- CONTENIDO --- */
-.article-content img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* --- SECCIÓN VIDEOS --- */
-
-.videos-section {
-    padding-bottom: 50px;
-}
-
-.videos-grid {
-    display: grid;
-    /* Usamos auto-fit para que se acomoden */
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
-    gap: 40px; /* Un poco más de espacio entre videos */
-    padding: 0 5%;
-    max-width: 1400px; /* Contenedor general contenido */
-    margin: 0 auto;
-    justify-content: center; /* Centra los elementos si sobran espacios */
-}
-
-.video-item {
-    position: relative;
-    /* Estilo tarjeta limpia */
-    background-color: transparent; 
-    border-radius: 12px;
-    overflow: hidden; /* Recorta las esquinas de la imagen */
+.transparencia-btn {
+    display: inline-block; /* Necesario para el enlace */
+    background-color: var(--color-primary);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    text-decoration: none !important;
     transition: transform 0.3s ease;
     
-    /* SOLUCIÓN AL VIDEO GIGANTE: */
-    /* Si hay uno solo, no crecerá más de 600px */
+    /* ANCHO Y ALTO FLEXIBLES */
     width: 100%;
-    max-width: 600px; 
-    margin: 0 auto; /* Se centra en su columna */
+    max-width: 450px; 
+    min-height: 80px;
+    height: auto; /* Permite crecer */
+    padding: 15px 25px;
 }
 
-/* Efecto al pasar el mouse por toda la tarjeta */
-.video-item:hover {
-    transform: translateY(-5px);
+.transparencia-btn:hover {
+    transform: scale(1.02);
+    background-color: #EA7600;
 }
 
-/* Quitamos subrayado de enlaces */
-.video-item a {
-    text-decoration: none;
-    display: block; /* Hace que toda la tarjeta sea clicable */
-}
-
-/* --- TÍTULO DEL VIDEO (ARRIBA) --- */
-.video-title {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 18px; /* Tamaño legible */
-    font-weight: 800; /* Bien negrita */
-    color: var(--color-text-dark); /* Gris oscuro */
-    margin: 0 0 15px 0; /* Espacio debajo del título (separación con la imagen) */
-    text-align: left; /* Alineado a la izquierda se ve más ordenado si está arriba */
-    line-height: 1.3;
-    
-    /* Cortar texto largo en una línea con "..." */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 5px; /* Un pelín de aire lateral */
-}
-
-/* Cambio de color del título al pasar el mouse */
-.video-item:hover .video-title {
-    color: var(--color-primary); /* Verde */
-}
-
-/* --- IMAGEN DEL VIDEO --- */
-.video-thumbnail-wrapper {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* Mantiene proporción 16:9 (Youtube) */
-    background-color: #000;
-    border-radius: 12px; /* Redondeamos la imagen */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra suave tras la imagen */
-    overflow: hidden;
-}
-
-.video-thumb {
-    position: absolute;
-    top: 0;
-    left: 0;
+/* Contenedor interno Flex */
+.transparencia-inner {
+    display: flex;
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    gap: 20px; /* Espacio entre icono y texto */
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    opacity: 0.95;
-    transition: opacity 0.3s, transform 0.3s; /* Animación suave */
-}
-
-/* Efecto zoom sutil en la imagen al hover */
-.video-item:hover .video-thumb {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-/* --- BOTÓN PLAY --- */
-.play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 164, 153, 0.9); /* Verde con transparencia */
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    padding-left: 4px; /* Ajuste visual óptico */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    z-index: 2; /* Asegura que esté encima de la imagen */
-}
-
-.video-item:hover .play-icon {
-    background: #EA7600; /* Naranja al hover */
-    transform: translate(-50%, -50%) scale(1.1);
-}
-
-/* Ajuste móvil */
-@media (max-width: 768px) {
-    .videos-grid {
-        grid-template-columns: 1fr; /* Una columna */
-    }
-    .video-title {
-        font-size: 16px; /* Un poco más chico en celular */
-        white-space: normal; /* Permitir 2 líneas en celular si es necesario */
-    }
-}
-
-/* --- ESTILOS PÁGINA SIMPLE (page-simple.php) --- */
-
-.simple-layout {
-    max-width: 1600px; /* Ancho máximo igual que la grilla de noticias */
-    margin: 40px auto; /* Centrado y separado del título */
-    padding: 0 20px;   /* Margen lateral en móviles */
-    min-height: 400px; /* Altura mínima por si hay poco texto */
-}
-
-/* Ajuste para que las listas dentro del contenido se vean bien */
-.simple-layout .qs-text-block ul, 
-.simple-layout .qs-text-block ol {
-    margin-left: 40px; /* Sangría para las viñetas */
-    margin-bottom: 20px;
-}
-
-.simple-layout .qs-text-block li {
-    margin-bottom: 10px;
-}
-/* --- ESTILOS TÍTULOS Y GRADOS (Tabla) --- */
-.price-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 30px 0;
-    font-size: 0.95em;
-}
-.price-table th {
-    background-color: var(--color-primary); /* Usa tu variable de color */
-    color: white;
-    padding: 12px;
-    text-align: left;
-}
-.price-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-}
-.price-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-.price-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* --- ESTILOS DOCUMENTACIÓN (Caja Vistos) --- */
-.vistos-box {
-    background: #f9f9f9; 
-    padding: 20px; 
-    border-left: 4px solid var(--color-primary); 
-    font-size: 0.9em;
-    margin-top: 15px;
-}
-
-
-/* --- BOTÓN DESTACADO ELECCIONES --- */
-.highlight-link {
-    display: inline-block;
-    background-color: var(--color-primary); /* Verde base */
-    color: #ffffff; /* Color crema suave por defecto */
-    padding: 12px 25px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 800; /* Letra gruesa */
-    margin: 15px 0;
-    transition: all 0.3s ease; /* Transición suave */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-/* Estado Hover (Mouse encima) */
-.highlight-link:hover {
-    background-color: #ffffff;; /* Verde un poco más oscuro */
-    color: #ffffff; /* Blanco puro */
-    transform: translateY(-2px); /* Pequeño efecto de elevación */
-    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-}
-
-/* --- ESTILOS INFOGRAFÍAS (DIP) --- */
-
-.infografia-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-    gap: 20px; /* Espacio entre imágenes */
-    margin-top: 20px;
-}
-
-.infografia-item img {
-    width: 100%;       /* Ocupa todo el ancho de su columna */
-    height: auto;      /* Mantiene la proporción */
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra suave */
-    display: block;    /* Evita espacios extra abajo */
-}
-
-/* RESPONSIVO: En tablets y celulares, pasa a 1 columna */
-@media (max-width: 768px) {
-    .infografia-grid {
-        grid-template-columns: 1fr; /* Una sola columna */
-    }
-}
-/* --- BOTONES TRANSPARENCIA (CORREGIDO SPANS) --- */
-
-.qs-text-block a.transparencia-btn {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-primary);
-    color: #ffffff !important;
-    text-decoration: none !important;
-    font-weight: normal !important;
-    padding: 15px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-    width: 100%;
-    max-width: 380px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    border: none !important; /* Elimina bordes fantasma */
-}
-
-.qs-text-block a.transparencia-btn:hover {
-    transform: scale(1.03);
-    background-color: #EA7600;
-    color: #ffffff !important;
 }
 
 /* Icono */
-.qs-text-block a.transparencia-btn .btn-icon {
-    width: 45px;
-    height: auto;
-    flex-shrink: 0;
-    margin-right: 15px !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    display: block !important;
-    border: none !important;
-    padding: 0 !important;
-    background: none !important;
+.icon-box {
+    flex-shrink: 0; /* Evita que el icono se aplaste */
 }
 
-/* Grupo de Texto (AHORA ES UN SPAN QUE ACTÚA COMO FLEX) */
-.transparencia-btn .btn-text-group {
-    display: flex !important;      /* Vital para que un span ordene cosas */
+.transparencia-btn .btn-icon {
+    width: 45px;
+    height: auto;
+    display: block;
+}
+
+/* Texto */
+.text-box {
+    display: flex;
     flex-direction: column;
+    justify-content: center;
     text-align: left;
-    line-height: 1.2;              /* Ajuste de interlineado */
+    flex-grow: 1; /* Ocupa el espacio restante */
 }
 
 .transparencia-btn .line-main {
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 800;
     text-transform: uppercase;
-    display: block;                /* Forzar salto de línea */
     color: #ffffff !important;
+    line-height: 1.2;
+    word-break: break-word; /* Evita desborde horizontal */
 }
 
 .transparencia-btn .line-sub {
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 13px;
+    font-size: 0.875rem;
     font-weight: 400;
     opacity: 0.95;
-    display: block;                /* Forzar salto de línea */
+    color: #ffffff !important;
+    line-height: 1.2;
+    margin-top: 3px;
+}
+
+/* Modo Oscuro para Botones Transparencia */
+body.inverted-colors .transparencia-btn {
+    background-color: #333 !important;
+    border: 1px solid #555 !important;
+}
+
+body.inverted-colors .transparencia-btn:hover {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+}
+
+/* Ajuste Móvil */
+@media (max-width: 600px) {
+    .transparencia-inner {
+        justify-content: flex-start; /* Alineado a la izquierda en móvil */
+    }
+}
+
+/* --- UTILIDADES LIMPIEZA --- */
+.text-center-spaced { text-align: center; margin: 30px 0; }
+.text-center { text-align: center; }
+.margin-top-20 { margin-top: 20px; }
+.margin-top-30 { margin-top: 30px; }
+.margin-bottom-20 { margin-bottom: 20px; }
+.margin-bottom-15 { margin-bottom: 15px; }
+.img-cover-full { width: 100%; height: 100%; object-fit: cover; }
+.img-responsive-max-800 { width: 100%; max-width: 800px; height: auto; }
+.list-disc-spaced { margin-left: 20px; list-style-type: disc; margin-bottom: 20px; }
+.list-circle-spaced { margin-left: 20px; margin-top: 10px; list-style-type: circle; }
+.box-highlight { background-color: #f9f9f9; border-left: 4px solid var(--color-primary); padding: 15px; margin-bottom: 20px; }
+.box-alert { background-color: #fff8e1; border-left: 4px solid var(--color-orange); padding: 15px; margin-top: 20px; }
+.text-small-gray { font-size: 0.9em; color: var(--color-text-gray); }
+.font-bold { font-weight: 700; }
+.font-italic { font-style: italic; }
+.link-teal { color: var(--color-primary); font-weight: 700; text-decoration: none; }
+.link-orange { color: var(--color-orange); font-weight: 700; text-decoration: none; }
+.link-dark { color: var(--color-text-dark); font-weight: 700; text-decoration: none; }
+.table-responsive { overflow-x: auto; }
+.flex-gap-40 { display: flex; gap: 40px; flex-wrap: wrap; }
+.flex-item-min-250 { flex: 1; min-width: 250px; }
+.min-h-500 { min-height: 500px; }
+.separator-line { border: 0; border-top: 1px solid #ddd; margin: 30px 0; }
+.list-none-spaced { margin-left: 20px; list-style: none; }
+.list-decimal-spaced { margin-left: 20px; margin-bottom: 20px; list-style-type: decimal; }
+.list-item-spaced { margin-bottom: 15px; }
+.container-content { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+.margin-y-40 { margin-top: 40px; margin-bottom: 40px; }
+.margin-left-20 { margin-left: 20px; }
+.link-orange-simple { color: var(--color-orange); text-decoration: none; }
+.link-teal-simple { color: var(--color-primary); text-decoration: none; }
+.link-dark-simple { color: var(--color-text-dark); text-decoration: none; }
+.link-orange:hover, .link-orange-simple:hover, .link-teal:hover, .link-teal-simple:hover, .link-dark:hover, .link-dark-simple:hover { text-decoration: underline; }
+.grid-junta { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px; }
+.margin-bottom-5 { margin-bottom: 5px; }
+.margin-bottom-10 { margin-bottom: 10px; }
+.font-extra-bold { font-weight: 800; }
+.text-center-simple { text-align: center; }
+.img-responsive-centered { max-width: 100%; height: auto; margin-top: 20px; display: block; margin-left: auto; margin-right: auto; }
+.img-cover-card { width: 100%; height: 100%; object-fit: cover; }
+.text-empty { text-align: center; width: 100%; color: var(--color-text-gray); font-style: italic; padding: 20px; }
+
+/* --- BARRA DE ACCESIBILIDAD --- */
+.access-toolbar {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background-color: #394049; color: white; z-index: 99999;
+    padding: 12px 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
+    font-family: 'Nunito Sans', sans-serif; border-top: 3px solid var(--color-primary);
+}
+.access-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; align-items: center; padding: 0 20px; }
+.access-btn {
+    background: transparent; border: 1px solid transparent; color: #fff;
+    cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 15px;
+    padding: 8px 15px; border-radius: 6px; transition: all 0.2s; font-weight: 600;
+}
+.access-btn:hover { background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
+.access-btn.active { background-color: var(--color-primary); color: white; border-color: var(--color-primary); }
+.access-btn .icon {
+    display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px;
+    background-color: #f0f0f0; color: #394049; font-weight: 900; border-radius: 4px; font-size: 14px; line-height: 1;
+}
+.access-close {
+    background: #cc0000; border: none; color: white; width: 30px; height: 30px;
+    border-radius: 50%; font-size: 16px; cursor: pointer; margin-left: 20px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* --- CLASES DE ACCIÓN (LÓGICA CORREGIDA) --- */
+
+/* 1. DISLEXIA */
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('fonts/OpenDyslexic-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Aplicar la fuente a todos los elementos EXCEPTO a los iconos de Material Symbols */
+body.dyslexia-mode :not(.material-symbols-outlined) {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+    letter-spacing: 0.03em !important;
+    word-spacing: 0.1em !important;
+    line-height: 1.6 !important;
+}
+
+/* Por si acaso, protegemos explícitamente la familia de los iconos */
+body.dyslexia-mode .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+}
+
+/* 2. CONTRASTE (Nitidez) */
+body.high-contrast { filter: contrast(130%) saturate(140%); }
+/* 3. MODO OSCURO (CORRECCIONES ESPECÍFICAS) */
+body.inverted-colors {
+    background-color: #121212 !important;
+    color: #eeeeee !important;
+}
+
+/* Contenedores principales oscuros */
+body.inverted-colors header, 
+body.inverted-colors footer, 
+body.inverted-colors .qs-card,
+body.inverted-colors .box-highlight, 
+body.inverted-colors .vistos-box,
+body.inverted-colors .submenu-container, 
+body.inverted-colors .dropdown-content,
+body.inverted-colors .video-item, 
+body.inverted-colors .news-card,
+body.inverted-colors .qs-text-block {
+    background-color: #1E1E1E !important; 
+    color: #eeeeee !important; 
+    border-color: #444 !important; 
+    box-shadow: none !important;
+}
+
+/* CORRECCIÓN CAJA AMARILLA (.box-alert) */
+/* En modo oscuro, la caja de alerta será gris muy oscuro con borde naranja, y texto blanco */
+body.inverted-colors .box-alert {
+    background-color: #2D2D2D !important; /* Gris un poco más claro para diferenciar */
+    color: #ffffff !important; 
+    border-left: 4px solid #EA7600 !important; /* Mantenemos el borde naranja */
+}
+/* Asegurar que el texto dentro de la caja amarilla sea blanco */
+body.inverted-colors .box-alert p,
+body.inverted-colors .box-alert li,
+body.inverted-colors .box-alert strong {
     color: #ffffff !important;
 }
 
-@media (max-width: 600px) {
-    .qs-text-block a.transparencia-btn {
-        max-width: 100%;
+/* CORRECCIÓN TABLA DE PRECIOS (.price-table) */
+/* Cabecera */
+body.inverted-colors .price-table th {
+    background-color: #004d47 !important; /* Verde muy oscuro */
+    color: #ffffff !important;
+    border-color: #555 !important;
+}
+/* Celdas */
+body.inverted-colors .price-table td {
+    color: #ffffff !important;
+    border-color: #444 !important;
+}
+/* Filas pares (las que eran blancas/grises) ahora oscuras */
+body.inverted-colors .price-table tr:nth-child(even) {
+    background-color: #2a2a2a !important; /* Gris medio */
+}
+/* Filas impares (el fondo base) */
+body.inverted-colors .price-table tr:nth-child(odd) {
+    background-color: #1a1a1a !important; /* Gris oscuro */
+}
+/* Hover en filas */
+body.inverted-colors .price-table tr:hover {
+    background-color: #333333 !important;
+}
+
+/* REGLA MAESTRA: Forzar color claro en TODOS los textos dentro de contenedores oscuros */
+body.inverted-colors .qs-card *, 
+body.inverted-colors .qs-text-block *,
+body.inverted-colors .box-highlight *,
+body.inverted-colors footer * {
+    color: #eeeeee !important;
+}
+
+/* Excepciones específicas */
+body.inverted-colors h1, 
+body.inverted-colors h2, 
+body.inverted-colors h3, 
+body.inverted-colors h4,
+body.inverted-colors strong,
+body.inverted-colors .qs-title,
+body.inverted-colors .qs-subtitle {
+    color: #ffffff !important; 
+}
+
+/* Títulos Turquesa */
+body.inverted-colors .text-teal,
+body.inverted-colors h2.text-teal,
+body.inverted-colors h3.text-teal {
+    color: #4DB6AC !important; 
+}
+
+/* Enlaces */
+body.inverted-colors a {
+    color: #4DB6AC !important; 
+}
+body.inverted-colors a:hover {
+    color: #80CBC4 !important;
+}
+
+/* Enlaces naranjas específicos */
+body.inverted-colors .link-orange,
+body.inverted-colors .link-orange-simple {
+    color: #FFB74D !important; /* Naranja claro */
+}
+
+/* Botones Sidebar */
+body.inverted-colors .qs-btn { 
+    background-color: #333 !important; 
+    color: #fff !important; 
+    border: 1px solid #555 !important; 
+}
+body.inverted-colors .qs-btn:hover, 
+body.inverted-colors .qs-btn.active { 
+    background-color: var(--color-primary) !important; 
+    border-color: var(--color-primary) !important; 
+    color: #fff !important;
+}
+
+/* Sub-botones del Sidebar */
+body.inverted-colors .sub-btn-sidebar {
+    color: #ffffff !important;
+}
+body.inverted-colors .sub-btn-sidebar:hover {
+    background-color: #2c2c2c !important;
+}
+body.inverted-colors .sub-btn-sidebar.active {
+    background-color: #333 !important;
+    color: #EA7600 !important; 
+}
+
+/* Imágenes normales */
+body.inverted-colors img, 
+body.inverted-colors video, 
+body.inverted-colors iframe { 
+    opacity: 0.9; 
+}
+
+/* 4. PAUSAR ANIMACIONES */
+body.pause-animations *, 
+body.pause-animations *::before, 
+body.pause-animations *::after {
+    transition: none !important; 
+    animation: none !important; 
+    transform: none !important;
+}
+
+/* --- ESTADO ACTIVO DEL MENÚ (Highlight) --- */
+
+/* Menú Principal */
+.main-nav li.current-menu-item > a,
+.main-nav li.current_page_item > a,
+.main-nav li.current-menu-parent > a {
+    color: var(--color-primary); /* Texto verde */
+    position: relative;
+}
+
+/* Línea debajo del ítem activo para destacarlo más */
+.main-nav li.current-menu-item > a::after,
+.main-nav li.current_page_item > a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-orange); /* Línea naranja */
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+
+/* Menú Recursos de Interés (Dropdown) */
+.dropdown-content li.current-menu-item > a {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: var(--color-primary); /* Texto verde */
+    font-weight: 800;
+    border-left: 4px solid var(--color-orange); /* Borde naranja lateral */
+}
+
+/* --- ESTADO ACTIVO EN MODO OSCURO --- */
+
+/* Menú Principal Oscuro */
+body.inverted-colors .main-nav li.current-menu-item > a {
+    color: #4DB6AC !important; /* Turquesa claro brillante */
+}
+
+body.inverted-colors .main-nav li.current-menu-item > a::after {
+    background-color: #4DB6AC !important; /* Línea turquesa */
+}
+
+/* Dropdown Oscuro */
+body.inverted-colors .dropdown-content li.current-menu-item > a {
+    background-color: #333 !important;
+    color: #4DB6AC !important;
+    border-left-color: #4DB6AC !important;
+}
+
+/* --- ESTADO ACTIVO PARA BOTONES HOME (FOOTER) --- */
+
+/* 1. Modo Normal (Claro) */
+.quick-link-item.active h3 {
+    color: var(--color-primary); /* Texto verde turquesa */
+    font-weight: 900; /* Más gordito */
+    text-decoration: underline; /* Opcional: subrayado para reforzar */
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--color-orange);
+}
+
+.quick-link-item.active .bg-icon {
+    opacity: 0.25; /* El círculo de fondo del icono se hace un poco más visible */
+    background-color: var(--color-primary);
+}
+
+.quick-link-item.active {
+    transform: translateY(-5px); /* Se mantiene "elevado" */
+}
+
+
+/* 2. Modo Oscuro (Inverted Colors) */
+body.inverted-colors .quick-link-item.active h3 {
+    color: #4DB6AC !important; /* Turquesa claro brillante */
+    text-decoration-color: #4DB6AC !important;
+}
+
+body.inverted-colors .quick-link-item.active .bg-icon {
+    background-color: #4DB6AC !important;
+    opacity: 0.3 !important;
+}
+
+/* --- AJUSTE VIDEOS HOME (ESPACIADO CORREGIDO) --- */
+.home-videos-grid {
+    /* Forzamos 2 columnas grandes si hay espacio */
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); 
+    gap: 30px; 
+    justify-content: center;
+    
+    /* CORRECCIÓN: Agregar espacio abajo para despegar del footer */
+    padding-bottom: 60px; /* Suficiente aire */
+    margin-bottom: 20px;
+}
+
+.home-videos-grid .video-item {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* En pantallas muy grandes, limitamos y centramos */
+@media (min-width: 1400px) {
+    .home-videos-grid {
+        max-width: 1300px;
+        margin-left: auto;
+        margin-right: auto;
     }
+}
+
+/* En móvil */
+@media (max-width: 768px) {
+    .home-videos-grid {
+        grid-template-columns: 1fr;
+        padding-bottom: 40px; /* Un poco menos en móvil */
+    }
+}
+
+/* --- CORRECCIÓN TEXTO NOTICIAS (MODO OSCURO) --- */
+body.inverted-colors .news-summary,
+body.inverted-colors .news-summary p {
+    color: #ffffff !important; /* Blanco puro para máxima legibilidad */
+}
+
+/* Opcional: Asegurar que el título de la noticia también se vea bien */
+body.inverted-colors .news-title {
+    color: #4DB6AC !important; /* Turquesa claro brillante para el título */
+}
+
+/* --- CORRECCIONES MODO OSCURO (BOTÓN Y RESUMEN) --- */
+
+/* 1. Botón "Seguir Leyendo" (.btn-read-more) */
+/* Estado Normal en Modo Oscuro: Naranja */
+body.inverted-colors .btn-read-more {
+    color: white !important; /* Texto Naranja */
+    border: 1px solid #EA7600 !important; /* Borde Naranja */
+    background-color: #EA7600 !important;
+}
+
+/* Estado Hover (al pasar el mouse): Celeste/Turquesa */
+body.inverted-colors .btn-read-more:hover {
+    background-color: #4DB6AC !important; /* Fondo Turquesa */
+    border-color: #4DB6AC !important;
+    color: #ffffff !important; /* Texto blanco para contraste */
+}
+
+/* 2. Título "Resumen" en la noticia individual (Single) */
+/* Forzamos que el título "RESUMEN" sea negro/gris oscuro para que se lea sobre el fondo blanco */
+body.inverted-colors .excerpt-label {
+    color: #333333 !important; 
+}
+
+/* Opcional: Asegurar que el texto del resumen también sea legible si el fondo es blanco */
+body.inverted-colors .article-lead {
+    color: #333333 !important;
+}
+
+/* ==========================================================================
+   CARRUSEL HERO SECTION (FULL WIDTH & RESPONSIVE)
+   ========================================================================== */
+
+.hero-swiper-container {
+    width: 100%;
+    max-width: 100vw; /* Fuerza a usar todo el ancho de la pantalla */
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.myHeroSwiper {
+    width: 100%;
+    /* Altura dinámica: Ocupará el 60% de la pantalla que esté usando el usuario */
+    height: 60vh; 
+    /* Pero le ponemos límites para que no sea gigante en PC ni minúscula en celular */
+    min-height: 350px; 
+    max-height: 650px; 
+}
+
+.hero-image-slide {
+    width: 100%;
+    height: 100%;
+    /* ESTAS DOS LÍNEAS SON LA MAGIA: */
+    object-fit: cover; /* Adapta y recorta la imagen sin aplastarla ni deformarla */
+    object-position: center center; /* Mantiene siempre el centro exacto a la vista */
+    display: block;
+}
+
+/* --- ESTILOS DE LOS CONTROLES (Flechas y Puntos) --- */
+.myHeroSwiper .swiper-button-next, 
+.myHeroSwiper .swiper-button-prev {
+    color: #00A499; 
+    transform: scale(0.7);
+    /* Le ponemos un fondo semitransparente para que se vean bien incluso si la foto es clara */
+    background: rgba(255, 255, 255, 0.85); 
+    padding: 30px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.myHeroSwiper .swiper-button-next:hover, 
+.myHeroSwiper .swiper-button-prev:hover {
+    background: #00A499;
+    color: white;
+}
+
+.myHeroSwiper .swiper-pagination-bullet {
+    background-color: #ffffff;
+    opacity: 0.8;
+    width: 10px;
+    height: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Sombra para que destaque en fotos blancas */
+}
+
+.myHeroSwiper .swiper-pagination-bullet-active {
+    background-color: #00A499;
+    transform: scale(1.3); /* Hace el punto activo un poco más grande */
+}
+
+/* Modo oscuro para los controles del carrusel */
+body.inverted-colors .myHeroSwiper .swiper-button-next, 
+body.inverted-colors .myHeroSwiper .swiper-button-prev {
+    background: rgba(30, 30, 30, 0.85) !important;
+    color: #4DB6AC !important;
+}
+
+/* ==========================================================================
+   EFECTO HOVER PARA MENÚ PRINCIPAL (PC)
+   ========================================================================== */
+.main-nav a {
+    display: inline-block; /* Necesario para que la transformación funcione */
+    transition: all 0.2s ease-in-out;
+}
+
+.main-nav a:hover {
+    color: var(--color-orange);
+    transform: scale(1.1); /* Agranda la letra un 10% */
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD MÓVIL (HEADER Y MENÚ)
+   ========================================================================== */
+
+/* 1. Ocultar el botón hamburguesa en Computadores */
+.menu-toggle {
+    display: none;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 1.1rem;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 800;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 900px) {
+    /* 2. Arreglo del Top Header (Logo vs Recursos de interés) */
+    .header-top {
+        flex-wrap: nowrap; /* Evita que se bajen de línea bruscamente */
+        gap: 15px;
+    }
+    
+    .main-logo {
+        max-width: 140px; /* Achicamos el logo en móviles */
+        height: auto;
+    }
+    
+    .btn-recursos {
+        font-size: 0.95rem; /* Letra un poco más chica */
+        white-space: normal; /* Permite que el texto se acomode en dos líneas si es necesario */
+        line-height: 1.2;
+        text-align: right;
+    }
+
+    /* 3. Arreglo del Menú Principal (Hamburguesa) */
+    .header-bottom {
+        flex-wrap: wrap; /* Permite que el menú se vaya abajo del botón */
+        position: relative;
+    }
+    
+    .menu-toggle {
+        display: block; /* Aparece el botón de menú */
+        margin-right: auto; /* Empuja el ícono de accesibilidad a la derecha */
+    }
+    
+    .main-nav {
+        width: 100%;
+        order: 3; /* Envía el contenedor del menú debajo del botón y accesibilidad */
+        margin-top: 15px;
+    }
+    
+    .main-nav ul {
+        display: none; /* MENÚ OCULTO POR DEFECTO EN CELULAR */
+        flex-direction: column;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        gap: 0;
+    }
+    
+    /* Esta clase la agrega el JS al hacer clic en el botón */
+    .main-nav ul.mostrar-menu {
+        display: flex;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    /* Adaptación visual de los enlaces en versión móvil */
+    .main-nav li {
+        width: 100%;
+        padding: 12px 5px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .main-nav li:last-child {
+        border-bottom: none;
+    }
+    
+    /* Quitar la rayita vertical separadora que usabas en PC */
+    .main-nav li:not(:last-child)::after {
+        display: none;
+    }
+    
+    .main-nav a {
+        font-size: 1.1rem;
+        display: block;
+        width: 100%;
+    }
+}
+/* ==========================================================================
+   MENÚ QUIÉNES SOMOS: ESCRITORIO VS CELULAR (SOLUCIÓN DEFINITIVA JS+FLEX)
+   ========================================================================== */
+
+/* --- 1. VISTA PC (ACORDEÓN NORMAL) --- */
+.qs-main-buttons-container {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+}
+
+.submenu-container { 
+    display: none; 
+    flex-direction: column; 
+    margin-top: 5px; 
+    margin-bottom: 15px;
+    background-color: #fff; 
+}
+
+/* En PC mantenemos las sangrías visuales */
+.sub-btn-sidebar.nivel-2 { padding-left: 55px !important; }
+.sub-btn-sidebar.nivel-3 { padding-left: 75px !important; font-size: 0.9375rem !important; color: #999; }
+
+/* Los contenedores de fila en PC se comportan como bloques verticales simples */
+.mobile-sub-row {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- VISTA PC: CONSEJO ACADÉMICO (Botones en columna) --- */
+.qs-sidebar-consejo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+    position: relative;
+}
+
+.qs-main-buttons-container-consejo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* =========================================
+   FIX MENÚ QUIENES SOMOS - SOLO MÓVIL
+   ========================================= */
+@media (max-width: 1024px) {
+
+    /* El contenedor padre vuelve a columna
+       porque ahora las filas internas son flex */
+    .submenu-container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px;
+    }
+
+    /* CADA FILA es horizontal */
+    .mobile-sub-row {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        gap: 10px;
+        padding-bottom: 6px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0,0,0,0.25) transparent;
+    }
+
+    .mobile-sub-row::-webkit-scrollbar {
+        display: block;
+        height: 4px;
+    }
+    .mobile-sub-row::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .mobile-sub-row::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.25);
+        border-radius: 4px;
+    }
+
+    /* Botones no se parten */
+    .mobile-sub-row .sub-btn-sidebar {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    /* NO poner .qs-main-buttons-container en flex-direction: row aquí.
+       El contenedor debe quedar COLUMN para apilar:
+       1) .mobile-main-row  (fila horizontal de botones principales)
+       2) .submenu-container (que a su vez contiene .mobile-sub-row horizontales)
+       La dirección ROW la maneja .mobile-main-row, no el contenedor padre. */
+
+}
+
+
+/* ==========================================================================
+   ARREGLO GLOBAL: MENÚS DE PESTAÑAS HORIZONTALES EN MÓVIL
+   (Aplica para Consejo Académico, Quiénes Somos, etc.)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .qs-sidebar-consejo {
+        flex-direction: column; /* Devuelve el sidebar a columna para que el contenedor interior maneje el scroll */
+        overflow: hidden;
+        padding-bottom: 0;
+    }
+    
+    .qs-main-buttons-container-consejo {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        gap: 10px;
+        padding-bottom: 12px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0,0,0,0.25) transparent;
+    }
+    
+    /* Diseño de la barrita deslizadora principal */
+    .qs-main-buttons-container-consejo::-webkit-scrollbar {
+        height: 4px;
+        display: block;
+    }
+    .qs-main-buttons-container-consejo::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .qs-main-buttons-container-consejo::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.25);
+        border-radius: 4px;
+    }
+    
+    /* Botones pill para móvil */
+    .qs-main-buttons-container-consejo .qs-btn {
+        white-space: nowrap !important;
+        flex-shrink: 0;
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        border-radius: 25px;
+        background: #fff;
+        border: 1px solid #ccc;
+        margin: 0;
+        line-height: 1.2;
+    }
+    .qs-main-buttons-container-consejo .qs-btn.active {
+        background: var(--color-primary);
+        color: white;
+        border-color: var(--color-primary);
+    }
+
+    /* Dark mode móvil consejo */
+    body.inverted-colors .qs-main-buttons-container-consejo .qs-btn {
+        background: #333;
+        border-color: #555;
+        color: #ddd;
+    }
+    body.inverted-colors .qs-main-buttons-container-consejo .qs-btn.active {
+        background: var(--color-primary);
+        color: white;
+        border-color: var(--color-primary);
+    }
+}
+/* ==========================================================================
+   CORRECCIÓN: COLOR VERDE PARA TÍTULOS EN EL CONTENIDO
+   ========================================================================== */
+.qs-subtitle,
+.qs-text-block h1,
+.qs-text-block h2,
+.qs-text-block h3,
+.qs-text-block h4,
+.container-content h1,
+.container-content h2,
+.container-content h3,
+.container-content h4 {
+    color: var(--color-primary) !important; /* Fuerza el color verde corporativo */
+    font-weight: 800; /* Asegura que se vean en negrita */
+    margin-top: 1.5em; /* Les da un poco de respiro arriba si hay párrafos previos */
+    margin-bottom: 0.5em; /* Separa un poco el texto que le sigue abajo */
+}
+
+/* Excepción: Aseguramos que en modo oscuro sigan viéndose bien (Turquesa brillante) */
+body.inverted-colors .qs-subtitle,
+body.inverted-colors .qs-text-block h1,
+body.inverted-colors .qs-text-block h2,
+body.inverted-colors .qs-text-block h3,
+body.inverted-colors .qs-text-block h4,
+body.inverted-colors .container-content h1,
+body.inverted-colors .container-content h2,
+body.inverted-colors .container-content h3,
+body.inverted-colors .container-content h4 {
+    color: #4DB6AC !important; 
+}
+
+/* ==========================================================================
+   AJUSTE DE ALTURA PARA EL CARRUSEL EN CELULARES
+   ========================================================================== */
+@media (max-width: 768px) {
+    .myHeroSwiper {
+        height: 35vh; /* Reduce la altura a solo el 35% de la pantalla */
+        min-height: 200px; /* Un mínimo mucho más bajo */
+        max-height: 300px; /* Un tope máximo para que no se estire */
+    }
+}
+
+/* ==========================================================================
+   EFECTOS HOVER PARA TARJETAS DE NOTICIAS
+   ========================================================================== */
+
+/* 1. Efecto Zoom en la imagen de la noticia */
+/* Primero le damos a la imagen una transición suave para que no sea un salto brusco */
+.news-image-placeholder img {
+    transition: transform 0.4s ease-in-out !important;
+}
+
+/* Cuando el mouse entra en la tarjeta (.news-card), la imagen crece un 8% */
+.news-card:hover .news-image-placeholder img {
+    transform: scale(1.08) !important;
+}
+
+/* 2. Efecto de agrandado en el botón "Seguir Leyendo" */
+/* Cuando el mouse pasa por el botón, se agranda un 5% además de cambiar de color */
+.btn-read-more:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 4px 8px rgba(234, 118, 0, 0.3); /* Opcional: le suma un brillito naranja sutil al agrandarse */
 }

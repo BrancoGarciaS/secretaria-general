@@ -5,7 +5,7 @@
 get_header(); 
 ?>
 
-<section class="section-title-bar" style="margin-top: 40px;">
+<section class="section-title-bar">
     <h2><?php the_title(); ?></h2>
 </section>
 
@@ -32,25 +32,25 @@ get_header();
                 
                 <p>También deberán realizar esta declaración aquellas personas que sirvan en más de un empleo y que la suma de sus remuneraciones y/o honorarios alcancen el monto señalado en el párrafo anterior.</p>
                 
-                <hr style="border: 0; border-top: 1px solid #ddd; margin: 30px 0;">
+                <hr class="separator-line">
 
                 <h3 class="qs-subtitle text-teal">Documentos y Enlaces</h3>
-                <ul style="margin-left: 20px; margin-bottom: 20px; list-style: none;">
-                    <li style="margin-bottom: 10px;">📄 <a href="https://www.transparenciaactiva.usach.cl/sites/default/files/paginas/instructivo_dip_2023_paso_a_paso.pdf" target="_blank" style="color: #EA7600; font-weight: bold;">Presione aquí para conocer el instructivo, de cómo realizar la declaración de Intereses y Patrimonio</a></li>
-                    <li style="margin-bottom: 10px;">📄 <a href="https://www.transparenciaactiva.usach.cl/sites/default/files/paginas/manual_dip_2023.pdf" target="_blank" style="color: #EA7600; font-weight: bold;">Presione aquí para conocer el manual de procedimiento de Declaraciones de Intereses y Patrimonio</a></li>
+                <ul class="list-none-spaced">
+                    <li class="list-item-spaced">📄 <a href="https://www.transparenciaactiva.usach.cl/sites/default/files/paginas/instructivo_dip_2023_paso_a_paso.pdf" target="_blank" class="link-orange font-bold">Presione aquí para conocer el instructivo, de cómo realizar la declaración de Intereses y Patrimonio</a></li>
+                    <li class="list-item-spaced">📄 <a href="https://www.transparenciaactiva.usach.cl/sites/default/files/paginas/manual_dip_2023.pdf" target="_blank" class="link-orange font-bold">Presione aquí para conocer el manual de procedimiento de Declaraciones de Intereses y Patrimonio</a></li>
                 </ul>
 
-                <div style="text-align: center; margin: 30px 0;">
-                    <p style="font-weight: 700; margin-bottom: 10px;">Para realizar su declaración acceda al siguiente link:</p>
+                <div class="text-center-spaced">
+                    <p class="font-bold margin-bottom-15">Para realizar su declaración acceda al siguiente link:</p>
                     <a href="https://www.declaracionjurada.cl/dip/" target="_blank" class="highlight-link">IR A DECLARACIONJURADA.CL</a>
                 </div>
 
-                <div style="background-color: #f9f9f9; padding: 15px; border-left: 4px solid #00A499; margin-bottom: 20px;">
+                <div class="box-highlight">
                     <p>De acuerdo con lo establecido en dicha ley, existe un plazo que vence el <strong>31 de marzo de cada año</strong>, para efectuar las actualizaciones de dichas declaraciones.</p>
-                    <p style="margin-top: 10px;"><strong>Contacto:</strong> Unidad de Probidad y Transparencia<br>
+                    <p class="margin-top-20"><strong>Contacto:</strong> Unidad de Probidad y Transparencia</p>
                     <p>Para cualquier duda o consulta se puede comunicar con la Unidad de Probidad y Transparencia al IP: 80105 o a su correo electrónico: dip@usach.cl</p>
-                    <strong>IP:</strong> 80105<br>
-                    <strong>Correo:</strong> <a href="mailto:dip@usach.cl" style="color: #00A499;">dip@usach.cl</a></p>
+                    <p><strong>IP:</strong> 80105</p>
+                    <p><strong>Correo:</strong> <a href="mailto:dip@usach.cl" class="link-teal-simple">dip@usach.cl</a></p>
                 </div>
 
                 <h3 class="qs-subtitle text-teal">Infografías de ayuda</h3>
@@ -71,24 +71,6 @@ get_header();
 
 </main>
 
-<hr style="border: 0; border-top: 1px solid #ddd; margin: 30px 0;">
 
-
-<section class="quick-links-container">
-    <?php 
-    $mis_botones = new WP_Query(array('post_type' => 'boton_home', 'posts_per_page' => -1, 'order' => 'ASC'));
-    if ($mis_botones->have_posts()) : while ($mis_botones->have_posts()) : $mis_botones->the_post(); 
-        $enlace = get_field('enlace_boton');
-        $icono  = get_field('icono_boton');
-    ?>
-        <a href="<?php echo esc_url($enlace); ?>" class="quick-link-item">
-            <div class="icon-wrapper">
-                <div class="bg-icon"></div> 
-                <?php if($icono): ?><img src="<?php echo esc_url($icono); ?>" alt="Icono"><?php else: ?><img src="<?php echo get_template_directory_uri(); ?>/images/workspace_premium_37dp_00A499_FILL0_wght400_GRAD0_opsz40 1.png" alt="Icono"><?php endif; ?>
-            </div>
-            <h3><?php the_title(); ?></h3>
-        </a>
-    <?php endwhile; wp_reset_postdata(); endif; ?>
-</section>
 
 <?php get_footer(); ?>

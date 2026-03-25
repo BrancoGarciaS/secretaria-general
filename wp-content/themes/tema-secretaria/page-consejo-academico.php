@@ -1,50 +1,62 @@
 <?php 
 /*
- * Template Name: Consejo Académico (Híbrida)
+ * Template Name: Consejo Académico 
  */
 get_header(); 
 ?>
 
-<section class="section-title-bar" style="margin-top: 40px;">
+<section class="section-title-bar">
     <h2><?php the_title(); ?></h2>
 </section>
 
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-    <?php 
-    if ( get_the_content() ) {
-        // Si el usuario edita la página, mostramos su contenido (el patrón insertado)
-        ?>
-        <div style="max-width: 1400px; margin: 40px auto; padding: 0 20px;">
-            <?php the_content(); ?>
-        </div>
-        <?php
-    } else {
-        // --- CONTENIDO POR DEFECTO (Estructura de Pestañas) ---
-        ?>
-        <div class="qs-layout" style="margin-top: 40px; margin-bottom: 40px;">
-            
-            <aside class="qs-sidebar">
-                <button class="qs-btn active" onclick="openTab(event, 'consejo')">Consejo Académico</button>
-                <button class="qs-btn" onclick="openTab(event, 'integrantes')">Integrantes</button>
-                <button class="qs-btn" onclick="openTab(event, 'actas')">Actas</button>
-                <button class="qs-btn" onclick="openTab(event, 'audios')">Audios</button>
-            </aside>
+    <div class="qs-layout margin-y-40">
+        
+        <aside class="qs-sidebar-consejo">
+            <div class="qs-main-buttons-container-consejo">
+                <button class="qs-btn active" onclick="openTab(event, 'consejo')">
+                    <?php echo get_field('btn_consejo_ca') ?: 'Consejo Académico'; ?>
+                </button>
+                <button class="qs-btn" onclick="openTab(event, 'integrantes')">
+                    <?php echo get_field('btn_integrantes_ca') ?: 'Integrantes'; ?>
+                </button>
+                <button class="qs-btn" onclick="openTab(event, 'actas')">
+                    <?php echo get_field('btn_actas_ca') ?: 'Actas'; ?>
+                </button>
+                <button class="qs-btn" onclick="openTab(event, 'audios')">
+                    <?php echo get_field('btn_audios_ca') ?: 'Audios'; ?>
+                </button>
+            </div>
+        </aside>
 
-            <main class="qs-content-area">
-                <div class="qs-card" style="min-height: 500px;">
-                    
-                    <div id="consejo" class="tab-content active-content">
-                        <h3 class="qs-subtitle text-teal">Consejo Académico</h3>
-                        <div class="qs-text-block">
+        <main class="qs-content-area">
+            <div class="qs-card min-h-500">
+                
+                <!-- TAB: Consejo Académico -->
+                <div id="consejo" class="tab-content active-content">
+                    <div class="qs-text-block">
+                        <?php 
+                        $contenido_consejo = get_field('tab_consejo_ca');
+                        if ($contenido_consejo) {
+                            echo $contenido_consejo;
+                        } else { ?>
+                            <h3 class="qs-subtitle text-teal">Consejo Académico</h3>
                             <p>El Consejo Académico es un organismo colegiado que asesora y actúa como cuerpo consultivo del Rector en materias de carácter académico. Tiene la particularidad que sus integrantes son elegidos democráticamente, a través de votaciones, por sus pares y representan a los tres estamentos de la Universidad: académico, administrativo y estudiantil.</p>
-                        </div>
+                        <?php } ?>
                     </div>
+                </div>
 
-                    <div id="integrantes" class="tab-content">
-                        <h3 class="qs-subtitle text-teal">Integrantes del Consejo Académico</h3>
-                        <div class="qs-text-block">
-                            <div style="overflow-x: auto;">
+                <!-- TAB: Integrantes -->
+                <div id="integrantes" class="tab-content">
+                    <div class="qs-text-block">
+                        <?php 
+                        $contenido_integrantes = get_field('tab_integrantes_ca');
+                        if ($contenido_integrantes) {
+                            echo $contenido_integrantes;
+                        } else { ?>
+                            <h3 class="qs-subtitle text-teal">Integrantes del Consejo Académico</h3>
+                            <div class="table-responsive">
                                 <table class="price-table">
                                     <thead><tr><th colspan="2">Autoridades</th></tr></thead>
                                     <tbody>
@@ -115,15 +127,21 @@ get_header();
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        <?php } ?>
                     </div>
+                </div>
 
-                    <div id="actas" class="tab-content">
-                        <h3 class="qs-subtitle text-teal">Actas del Consejo Académico</h3>
-                        
-                        <div class="qs-text-block">
-                            <h4 style="margin-top: 20px; font-weight: 800;">Actas 2024</h4>
-                            <ul class="download-list" style="margin-left: 20px;">
+                <!-- TAB: Actas -->
+                <div id="actas" class="tab-content">
+                    <div class="qs-text-block">
+                        <?php 
+                        $contenido_actas = get_field('tab_actas_ca');
+                        if ($contenido_actas) {
+                            echo $contenido_actas;
+                        } else { ?>
+                            <h3 class="qs-subtitle text-teal">Actas del Consejo Académico</h3>
+                            <h4 class="font-bold margin-top-20">Actas 2024</h4>
+                            <ul class="download-list margin-left-20">
                                 <li>📄 <a href="https://drive.google.com/file/d/1KfT4PM19hocna8JFOWOSAHKdBy4G6d8a/view?usp=drive_link" target="_blank">Sesión Ordinaria N°1</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1iig9BnhhvaZ2yTeMIq3362X7QjDQIKhk/view?usp=drive_link" target="_blank">Sesión Ordinaria N°2</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1ACbWGSooQ7RfePZaVWAKun2cMpUtfa2j/view?usp=drive_link" target="_blank">Sesión Ordinaria N°3</a></li>
@@ -136,12 +154,12 @@ get_header();
                                 <li>📄 <a href="https://secretaria.usach.cl/sites/secretaria/files/paginas/010_acta_ordinaria_de_consejo_academico_20.11.2024.pdf" target="_blank">Sesión Ordinaria N°10</a></li>
                                 <li>📄 <a href="https://secretaria.usach.cl/sites/secretaria/files/paginas/011_acta_ordinaria_de_consejo_academico_11.12.2024_1.pdf" target="_blank">Sesión Ordinaria N°11</a></li>
                                 <li>📄 <a href="https://secretaria.usach.cl/sites/secretaria/files/paginas/012_acta_ordinaria_de_consejo_academico_18.12.2024.pdf" target="_blank">Sesión Ordinaria N°12</a></li>
-                                <li style="margin-top: 10px;">📄 <a href="http://drive.google.com/file/d/1TeM4jbx_oTT4pQDdgwfaXQDnI7H_lkWX/view?usp=drive_link" target="_blank">Sesión Extraordinaria N°1</a></li>
+                                <li>📄 <a href="http://drive.google.com/file/d/1TeM4jbx_oTT4pQDdgwfaXQDnI7H_lkWX/view?usp=drive_link" target="_blank">Sesión Extraordinaria N°1</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1Sm-U_bRwPAkhxSIOe3zDvMzJ6-rLwAR6/view?usp=drive_link" target="_blank">Sesión Extraordinaria N°3</a></li>
                             </ul>
 
-                            <h4 style="margin-top: 20px; font-weight: 800;">Actas 2023</h4>
-                            <ul class="download-list" style="margin-left: 20px;">
+                            <h4 class="font-bold margin-top-20">Actas 2023</h4>
+                            <ul class="download-list margin-left-20">
                                 <li>📄 <a href="https://drive.google.com/file/d/1_jil4FAcyiPMdYaGZiqM5mMLxWA145mF/view?usp=sharing" target="_blank">Sesión Ordinaria N°1</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1I7ckdQd7qXmoebnEqteJcbvrMiDJPH69/view?usp=sharing" target="_blank">Sesión Ordinaria N°2</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1p1WAFIqOOah5BRRUXgwXbrLl_IJW5ws2/view?usp=drive_link" target="_blank">Sesión Ordinaria N°3</a></li>
@@ -153,18 +171,24 @@ get_header();
                                 <li>📄 <a href="https://drive.google.com/file/d/1dO4c_Us5nXotmZgn-jgucPhI9V9_wfou/view?usp=drive_link" target="_blank">Sesión Ordinaria N°9</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1lJFbKuB3yjce4XggpdAj7zXV3B6DNB4l/view?usp=drive_link" target="_blank">Sesión Ordinaria N°9a</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1ra45XfBug3dCyr694hf_h8_4cN3NqYlW/view?usp=drive_link" target="_blank">Sesión Ordinaria N°10</a></li>
-                                <li style="margin-top: 10px;">📄 <a href="http://drive.google.com/file/d/1BHtkpLnQkei13kAIh5PaBE8y-na3ebjz/view?usp=drive_link" target="_blank">Sesión Extraordinaria N°1</a></li>
+                                <li>📄 <a href="http://drive.google.com/file/d/1BHtkpLnQkei13kAIh5PaBE8y-na3ebjz/view?usp=drive_link" target="_blank">Sesión Extraordinaria N°1</a></li>
                                 <li>📄 <a href="https://drive.google.com/file/d/1jqh6HcKtm4__4i5pOeVxMRpdFJ__HKNV/view?usp=drive_link" target="_blank">Sesión Extraordinaria N°2</a></li>
                             </ul>
-                        </div>
+                        <?php } ?>
                     </div>
+                </div>
 
-                    <div id="audios" class="tab-content">
-                        <h3 class="qs-subtitle text-teal">Audios del Consejo Académico</h3>
-                        
-                        <div class="qs-text-block">
-                            <h4 style="margin-top: 20px; font-weight: 800;">Sesiones Extraordinarias 2025</h4>
-                            <ul class="download-list" style="margin-left: 20px;">
+                <!-- TAB: Audios -->
+                <div id="audios" class="tab-content">
+                    <div class="qs-text-block">
+                        <?php 
+                        $contenido_audios = get_field('tab_audios_ca');
+                        if ($contenido_audios) {
+                            echo $contenido_audios;
+                        } else { ?>
+                            <h3 class="qs-subtitle text-teal">Audios del Consejo Académico</h3>
+                            <h4 class="font-bold margin-top-20">Sesiones Extraordinarias 2025</h4>
+                            <ul class="download-list margin-left-20">
                                 <li>🔊 <a href="https://drive.google.com/file/d/1QqPvXUopALJN-X8HEmiZtrAHEkg-bLbS/view?usp=drive_link" target="_blank">Audio Sesión 1 Ext.</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/1xaEovtJkMdTsqI7tuMQJmbcgAtpj2ouy/view?usp=drive_link" target="_blank">Audio Sesión 2 Ext.</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/1X5Kb1ahTjHem5ZpSxmunFoLzB_ViZJ0_/view?usp=drive_link" target="_blank">Audio Sesión 3 Ext.</a></li>
@@ -172,8 +196,8 @@ get_header();
                                 <li>🔊 <a href="https://drive.google.com/file/d/1ezdPsMS1t4ygrUPBjWb_yMfmEzZ7SVnG/view?usp=drive_link" target="_blank">Audio Sesión 5 Ext.</a></li>
                             </ul>
 
-                            <h4 style="margin-top: 20px; font-weight: 800;">Sesiones Ordinarias 2024</h4>
-                            <ul class="download-list" style="margin-left: 20px;">
+                            <h4 class="font-bold margin-top-20">Sesiones Ordinarias 2024</h4>
+                            <ul class="download-list margin-left-20">
                                 <li>🔊 <a href="https://drive.google.com/file/d/12lU3R70cWlHor5UUhg4QG1UqoPnWmbhv/view" target="_blank">Audio Sesión 1</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/1psR06cnnlvDDg661_okvKpMFx8Jng_zu/view?usp=drive_link" target="_blank">Audio Sesión 2</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/11WYH3-eUpYxyAd0JyE0tI_8R_89OzqsR/view?usp=drive_link" target="_blank">Audio Sesión 3</a></li>
@@ -188,8 +212,8 @@ get_header();
                                 <li>🔊 <a href="https://drive.google.com/file/d/1wvLfxXmbkrP-UcYKDVLkpgcOsTB9zJPf/view?usp=drive_link" target="_blank">Audio Sesión 12</a></li>
                             </ul>
 
-                            <h4 style="margin-top: 20px; font-weight: 800;">Sesiones Extraordinarias 2024</h4>
-                            <ul class="download-list" style="margin-left: 20px;">
+                            <h4 class="font-bold margin-top-20">Sesiones Extraordinarias 2024</h4>
+                            <ul class="download-list margin-left-20">
                                 <li>🔊 <a href="https://drive.google.com/file/d/1BfeNwdyESh5-99g9_s1xrZMKGtURSPoC/view?usp=drive_link" target="_blank">Audio Sesión 1 Ext.</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/1i7DEFdX-JkM1xlNNeh7-27PQUObwGkqQ/view?usp=drive_link" target="_blank">Audio Sesión 2 Ext.</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/1oR33lAWKloY0McXCYcSDuQLeJV5IT8Fk/view?usp=drive_link" target="_blank">Audio Sesión 3 Ext.</a></li>
@@ -198,8 +222,8 @@ get_header();
                                 <li>🔊 <a href="https://drive.google.com/file/d/13LwLguwiawOOLUP_NL_vBtR8pKGKxXHa/view?usp=drive_link" target="_blank">Audio Sesión 5 Ext. Parte 2</a></li>
                             </ul>
 
-                            <h4 style="margin-top: 20px; font-weight: 800;">Sesiones Ordinarias 2023</h4>
-                            <ul class="download-list" style="margin-left: 20px;">
+                            <h4 class="font-bold margin-top-20">Sesiones Ordinarias 2023</h4>
+                            <ul class="download-list margin-left-20">
                                 <li>🔊 <a href="https://drive.google.com/file/d/1JWfWPaX4eChaCNPU0eNKmQzTA2WIgHd6/view?usp=sharing" target="_blank">Audio Sesión 1</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/1ZhYqUZyFOwAoZj9lquCRyWQicPJtvfqq/view?usp=sharing" target="_blank">Audio Sesión 2</a></li>
                                 <li>🔊 <a href="https://drive.google.com/file/d/1wHP8v82NgnUPqiFg8JD9LAllpif0bJnh/view?usp=sharing" target="_blank">Audio Sesión 3</a></li>
@@ -214,62 +238,34 @@ get_header();
                                 <li>🔊 <a href="https://drive.google.com/file/d/1RGi6H2eO8TtyCMpRzhvQH-FhbC3oPkB-/view?usp=drive_link" target="_blank">Audio Sesión 11</a></li>
                             </ul>
 
-                            <h4 style="margin-top: 20px; font-weight: 800;">Sesiones Extraordinarias 2023</h4>
-                            <ul class="download-list" style="margin-left: 20px;">
+                            <h4 class="font-bold margin-top-20">Sesiones Extraordinarias 2023</h4>
+                            <ul class="download-list margin-left-20">
                                 <li>🔊 <a href="https://drive.google.com/file/d/185J6s9iYZKlTBRtV-4EdXbxBF1EKTzyH/view?ts=64b95d86" target="_blank">Audio Sesión 1 Ext.</a></li>
                             </ul>
-                        </div>
+                        <?php } ?>
                     </div>
-
                 </div>
-            </main>
-        </div>
 
-        <script>
-            // Función para cambiar de pestañas (Tabulación)
-            function openTab(evt, tabName) {
-                // 1. Ocultar todos los contenidos
-                var i, tabcontent, tablinks;
-                tabcontent = document.getElementsByClassName("tab-content");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-                
-                // 2. Quitar la clase "active" de todos los botones
-                tablinks = document.getElementsByClassName("qs-btn");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].classList.remove("active");
-                }
+            </div>
+        </main>
+    </div>
 
-                // 3. Mostrar el contenido actual y activar el botón clickeado
-                document.getElementById(tabName).style.display = "block";
-                evt.currentTarget.classList.add("active");
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
-        </script>
-        <?php
-    }
-    ?>
+            tablinks = document.getElementsByClassName("qs-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 
 <?php endwhile; endif; ?>
-
-<hr style="border: 0; border-top: 1px solid #ddd; margin: 30px 0;">
-
-
-<section class="quick-links-container">
-    <?php 
-    $mis_botones = new WP_Query(array('post_type' => 'boton_home', 'posts_per_page' => -1, 'order' => 'ASC'));
-    if ($mis_botones->have_posts()) : while ($mis_botones->have_posts()) : $mis_botones->the_post(); 
-        $enlace = get_field('enlace_boton');
-        $icono  = get_field('icono_boton');
-    ?>
-        <a href="<?php echo esc_url($enlace); ?>" class="quick-link-item">
-            <div class="icon-wrapper">
-                <div class="bg-icon"></div> 
-                <?php if($icono): ?><img src="<?php echo esc_url($icono); ?>" alt="Icono"><?php else: ?><img src="<?php echo get_template_directory_uri(); ?>/images/workspace_premium_37dp_00A499_FILL0_wght400_GRAD0_opsz40 1.png" alt="Icono"><?php endif; ?>
-            </div>
-            <h3><?php the_title(); ?></h3>
-        </a>
-    <?php endwhile; wp_reset_postdata(); endif; ?>
-</section>
 
 <?php get_footer(); ?>

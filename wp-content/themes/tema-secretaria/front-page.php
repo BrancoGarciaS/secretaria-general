@@ -1,14 +1,71 @@
 <?php get_header(); ?>
 
-    <section class="hero-section">
-        <?php 
-        $imagen_hero = get_field('imagen_hero'); 
-        if( $imagen_hero ): ?>
-            <img src="<?php echo esc_url($imagen_hero['url']); ?>" alt="<?php echo esc_attr($imagen_hero['alt']); ?>" class="hero-image">
-        <?php else: ?>
-            <img src="<?php echo get_template_directory_uri(); ?>/images/diapos-inicio-03 1.png" alt="Imagen Principal" class="hero-image">
-        <?php endif; ?>
+    <section class="hero-section hero-swiper-container">
+        <div class="swiper myHeroSwiper">
+            <div class="swiper-wrapper">
+                
+                <?php 
+                // Consultamos las imágenes subidas al nuevo Custom Post Type
+                $carrusel_query = new WP_Query(array(
+                    'post_type'      => 'slider_home',
+                    'posts_per_page' => -1, // Traer todas las imágenes
+                    'order'          => 'ASC'
+                ));
+
+                if ($carrusel_query->have_posts()) : 
+                    while ($carrusel_query->have_posts()) : $carrusel_query->the_post(); 
+                        if (has_post_thumbnail()) :
+                            $img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+                ?>
+                            <div class="swiper-slide">
+                                <img src="<?php echo esc_url($img_url); ?>" alt="<?php the_title_attribute(); ?>" class="hero-image-slide">
+                            </div>
+                <?php 
+                        endif;
+                    endwhile; 
+                    wp_reset_postdata(); 
+                else: 
+                    // FALLBACK: Si aún no subes imágenes al carrusel, muestra la antigua
+                    $imagen_hero = get_field('imagen_hero'); 
+                ?>
+                    <div class="swiper-slide">
+                        <?php if( $imagen_hero ): ?>
+                            <img src="<?php echo esc_url($imagen_hero['url']); ?>" alt="<?php echo esc_attr($imagen_hero['alt']); ?>" class="hero-image-slide">
+                        <?php else: ?>
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/diapos-inicio-03 1.png" alt="Imagen Principal" class="hero-image-slide">
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+            
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if(typeof Swiper !== 'undefined') {
+                var swiper = new Swiper(".myHeroSwiper", {
+                    loop: true, // Se repite infinitamente
+                    autoplay: {
+                        delay: 5000, // Cambia cada 5 segundos
+                        disableOnInteraction: false,
+                    },
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    }
+                });
+            }
+        });
+    </script>
 
     <section class="quick-links-container">
         <?php 
@@ -45,7 +102,7 @@
 
     <section class="news-section">
         <div class="section-title-bar">
-            <h2>NOTICIAS</h2>
+            <h2><?php echo get_field('titulo_seccion_noticias') ?: 'NOTICIAS'; ?></h2>
         </div>
         
         <div class="news-grid">
@@ -59,9 +116,9 @@
                 while ($mis_noticias->have_posts()) : $mis_noticias->the_post(); 
             ?>
                 <article class="news-card">
-                    <div class="news-image-placeholder" style="overflow:hidden;">
+                    <div class="news-image-placeholder">
                         <?php if (has_post_thumbnail()) {
-                            the_post_thumbnail('medium', ['style' => 'width:100%; height:100%; object-fit:cover;']);
+                            the_post_thumbnail('medium', ['class' => 'img-cover-full']);
                         } ?>
                     </div>
                     <h3 class="news-title"><?php the_title(); ?></h3>
@@ -88,10 +145,10 @@
 
     <section class="videos-section">
         <div class="section-title-bar">
-            <h2>VIDEO DESTACADO</h2>
+            <h2><?php echo get_field('titulo_seccion_videos') ?: 'VIDEO DESTACADO'; ?></h2>
         </div>
 
-        <div class="videos-grid">
+        <div class="videos-grid home-videos-grid">
             <?php 
             $videos_query = new WP_Query(array(
                 'post_type'      => 'video_destacado',
@@ -104,7 +161,7 @@
                 while ($videos_query->have_posts()) : $videos_query->the_post(); 
                     
                     $url_video = get_field('link_video_youtube');
-                    $video_id = obtener_id_youtube($url_video); // Función de functions.php
+                    $video_id = obtener_id_youtube($url_video); 
                     
                     if($video_id) {
                         $thumbnail = "https://img.youtube.com/vi/{$video_id}/hqdefault.jpg";
@@ -131,7 +188,7 @@
                 wp_reset_postdata(); 
             else: 
             ?>
-                <p style="padding: 0 5%;">No hay videos destacados configurados.</p>
+                <p>No hay videos destacados configurados.</p>
             <?php endif; ?>
         </div>
     </section>
